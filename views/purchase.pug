@@ -1,0 +1,48 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Doll Stall Admin
+  link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet') 
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='/css/style.css')
+  style.
+    form {
+      max-width: 700px;
+      margin: 2vh auto 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 4px;
+      color: black;
+    }
+  include nav 
+  include buttonBar    
+  .container
+    h2 Add New Purchase
+    form#addPurchaseForm(action='/purchase' method='POST')
+      .form-group
+        label(for='itemName') Item Name:
+        input#itemName.form-control(type='text' name='itemName')
+        #itemNameError.error-message
+      .form-group
+        label(for='itemPrice') Unit(Kg,L,pcs):
+        input#itemUnit.form-control(type='text' name='itemUnit')
+        #itemUnitError.error-message
+      .form-group
+        label(for='itemPrice') Item Price (UGX):
+        input#itemPrice.form-control(type='number' name='itemPrice')
+        #itemPriceError.error-message
+      .form-group
+        label(for='itemDescription') Description:
+        textarea#itemDescription.form-control(type='text' rows='3' name='itemDescription')
+        #itemDescriptionError.error-message
+      .form-group
+        label(for='itemImage') Item Image:
+        input#itemImage.form-control-file(type='file' accept='image/*' name='itemImage')
+        #itemImageError.error-message
+      .form-group
+      button.btn.btn-primary(type='submit') Add Item
+  br    
+  include footer
+  script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+

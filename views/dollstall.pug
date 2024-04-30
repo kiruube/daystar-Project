@@ -1,0 +1,37 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Daycare Shop
+  link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+include nav
+// Product Cards
+.container.mt-5
+  .row
+    .col-md-6
+      .card.mb-3
+        img.card-img-top(src='doll.jpg' alt='Doll')
+        .card-body
+          h5.card-title Doll
+          p.card-text UGX 25,000
+          button.btn.btn-primary.add-to-cart(data-name='Doll' data-price='25000') Add to Cart
+    .col-md-6
+      .card.mb-3
+        img.card-img-top(src='baby_utilities.jpg' alt='Baby Utilities')
+        .card-body
+          h5.card-title Baby Utilities
+          p.card-text UGX 35,000
+          button.btn.btn-primary.add-to-cart(data-name='Baby Utilities' data-price='35000') Add to Cart
+// Shopping Cart
+.card.mt-3
+  .card-header
+    | Shopping Cart
+  ul.list-group.list-group-flush.cart-items
+  .card-body
+    | Total: UGX 
+    span#cart-total 0
+  button#checkout-btn.btn.btn-success.mt-3 Checkout
+include footer
+// JavaScript
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+script(src='/public/js/cart.js')

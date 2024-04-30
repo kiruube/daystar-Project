@@ -1,0 +1,39 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Check Out Baby
+    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/css/style.css')
+    style.
+      .container form {
+        max-width: 50%;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 0 auto; /* Center the form horizontally */
+        background-color: white;
+      }
+  body
+    include nav 
+    include buttonBar   
+    .container
+      form#checkoutForm(action='/checkout' method='POST')
+        h2.mb-4 Check Out Baby
+        .form-group
+          label(for='babyName') Baby&apos;s Name
+          input#babyName.form-control(type='text' name='babyName')
+        .form-group
+          label(for='personPickingUp') Person Picking Up
+          input#personPickingUp.form-control(type='text' name='personPickingUp')
+        .form-group
+          label(for='contactNumber') Contact Number
+          input#contactNumber.form-control(type='text' name='contactNumber')
+        .form-group
+          label(for='checkoutNotes') Notes (Optional)
+          textarea#checkoutNotes.form-control(rows='3' name='checkoutNotes')
+        button.btn.btn-danger(type='submit') Confirm Check Out
+      br    
+    include footer
+  script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

@@ -1,0 +1,46 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Daycare System
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='css/style.css')
+  style.
+    /* Navbar styling */
+    .navbar a.nav-link {
+    color: #fff;
+    /* Default text color */
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+    /* Apply transition effect to transform and color */
+    }
+    /* Zoom in effect on hover */
+    .navbar a.nav-link:hover {
+    transform: scale(1.1);
+    /* Scale up to 110% on hover (zoom in effect) */
+    }
+nav.navbar.navbar-expand-lg(style='\
+background-image: linear-gradient(\
+to right top,\
+#071a17,\
+#031f21,\
+#00232d,\
+#022639,\
+#162842\
+);\
+')
+  h3(style='color: #6d9cdf;') DayStar
+  img(src='/images/icon.png' alt='DayStar Icon' style='width: 40px; margin-right: 10px')
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbarNav.collapse.navbar-collapse.justify-content-between
+    ul.navbar-nav
+    ul.navbar-nav
+      li.nav-item
+        a#para.nav-link(href='/index.html') About
+      li.nav-item
+        a#para.nav-link(href='../views/dollstall.html') Doll Stall
+script(src='https://code.jquery.com/jquery-3.5.1.slim.min.js')
+script(src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js')
+script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js')

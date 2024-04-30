@@ -1,0 +1,133 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Registered Babies
+  // Bootstrap CSS
+  link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='/css/style.css')
+  style.
+    .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: left;
+    }
+    .form-container {
+    margin-top: 20px;
+    }
+    .table-container {
+    margin-top: 40px;
+    }
+    button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    }
+    table th,
+    table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width:auto;
+    text-align: center;
+    }
+    table th {
+    background-color: #f2f2f2;
+    }
+    table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #f2f2f2;
+    }
+include nav
+include buttonBar
+br
+.container
+  table.table.table-striped
+    thead
+      tr
+        th Baby Number
+        th Name
+        th Date of Birth
+        th Gender
+        th Parent/Guardian
+        th Contact
+        th Email Address
+        th Location
+        th Action
+    tbody#babyTableBody
+      if babies.length 
+        each baby in babies 
+          if baby.parentResponsibility === 'father' 
+            tr 
+              td #{baby.babyNumber}
+              td #{baby.childName}
+              td #{baby.dateOfBirth}
+              td #{baby.gender}
+              td #{baby.fatherName}
+              td #{baby.fatherPhone}
+              td #{baby.fatherEmail}
+              td #{baby.location}
+              td 
+                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update 
+              td  
+                form(method="POST" action="/delete")
+                  input(type="hidden" name="id" value=baby._id)
+                  button.btn.btn-primary(type="submit") Delete
+          else if baby.parentResponsibility === 'mother'
+            tr 
+              td #{baby.babyNumber}
+              td #{baby.childName}
+              td #{baby.dateOfBirth}
+              td #{baby.gender}
+              td #{baby.motherName}
+              td #{baby.motherPhone}
+              td #{baby.motherEmail}
+              td #{baby.location}
+              td 
+                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update
+              td  
+                form(method="POST" action="/delete")
+                  input(type="hidden" name="id" value=baby._id)
+                  button.btn.btn-primary(type="submit") Delete
+          else if  baby.parentResponsibility === 'both'
+            tr 
+              td #{baby.babyNumber}
+              td #{baby.childName}
+              td #{baby.dateOfBirth}
+              td #{baby.gender}
+              td #{baby.motherName+' and '+ baby.fatherName}
+              td #{baby.motherPhone+' and '+ baby.fatherPhone}
+              td #{baby.motherEmail+' and '+ baby.fatherEmail}
+              td #{baby.location}
+              td 
+                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update
+              td  
+                form(method="POST" action="/delete")
+                  input(type="hidden" name="id" value=baby._id)
+                  button.btn.btn-primary(type="submit") Delete
+          else if  baby.parentResponsibility === 'other'
+            tr 
+              td #{baby.babyNumber}
+              td #{baby.childName}
+              td #{baby.dateOfBirth}
+              td #{baby.gender}
+              td #{baby.guardianName}
+              td #{baby.guardianPhone}
+              td #{baby.guardianEmail}
+              td #{baby.location}
+              td 
+                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update 
+              td  
+                form(method="POST" action="/delete")
+                  input(type="hidden" name="id" value=baby._id)
+                  button.btn.btn-primary(type="submit") Delete
+
+include footer      
+// Bootstrap JS and dependencies (e.g., Chart.js)
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+

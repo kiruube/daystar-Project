@@ -1,0 +1,103 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Registration
+  // Bootstrap CSS
+  link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+  link(rel='stylesheet' href='/css/style.css')
+  style.
+    #sitterRegistrationForm {
+    width: 600px;
+    margin: 2vh auto 0 auto;
+    padding: 20px;
+    background-color: rgb(240, 240, 240);
+    border-radius: 4px;
+    font-size: 13.5px;
+    color: black;
+    }
+    .error-message {
+    color: red;
+    font-size: 0.875rem;
+    }
+    .card-header {
+    color: black;
+    }
+include nav
+include buttonBar
+br
+#form.container.mt-5
+  .row.justify-content-center
+    .col-md-8
+      .card
+        .card-header Staff Registration Form
+        .card-body
+          form#sitterRegistrationForm(action='' method='POST')
+            // Staff's Information
+            .form-group
+              label(for='fullName') Full Name
+              input#fullName.form-control(type='text' name='fullName')
+              #fullNameError.error-message
+            .form-group
+              label(for='gender') Gender
+              select#gender.form-control(name='gender')
+                option(value='') Select Gender
+                option(value='male') Male
+                option(value='female') Female
+              #genderError.error-message
+            .form-group
+              label(for='dateOfBirth') Date of Birth
+              input#dateOfBirth.form-control(type='date' name='dateOfBirth')
+              #dateOfBirthError.error-message
+            .form-group
+              label(for='religion') Religion
+              input#religion.form-control(type='text' name='religion')
+              #religionError.error-message
+            .form-group
+              label(for='phone') Telephone Number
+              input#phone.form-control(type='tel' name='phone')
+              #phoneError.error-message
+            .form-group
+              label(for='email') Email
+              input#email.form-control(type='email' name='email')
+              #emailError.error-message
+            .form-group
+              label(for='nationality') Nationality
+              input#nationality.form-control(type='text' name='nationality')
+              #nationalityError.error-message
+            .form-group
+              label(for='nin') National ID Number (NIN)
+              input#nin.form-control(type='text' name='nin')
+              #ninError.error-message
+            .form-group
+              label(for='nok') Next of Kin
+              input#nok.form-control(type='text' name='nok')
+              #nokError.error-message
+            .form-group
+              label(for='education') Level of Education
+              input#education.form-control(type='text' name='education')
+              #educationError.error-message
+            .form-group
+              label(for='recommendersName') Recommender&apos;s Name
+              input#recommendersName.form-control(type='text' name='recommendersName')
+              #recommendersNameError.error-message
+            .form-group.form-check
+              input#kabalagaResident.form-check-input(type='checkbox' name='kabalagaResident')
+              label.form-check-label(for='kabalagaResident') Is a resident of Kabalaga.
+              #kabalagaResidentError.error-message
+            .form-group
+              label(for='role') Role
+              input#role.form-control(type='text' name='role')
+              #roleError.error-message
+            .form-group
+              label(for='staffNumber') Staff Number
+              input#staffNumber.form-control(type='text' name='staffNumber')
+              #staffNumberError.error-message
+            .form-group
+            button.btn.btn-primary(type='submit') Register
+br
+include footer 
+// Bootstrap JS and dependencies (e.g., Chart.js)
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+script(src='../public/js/Reg.js')

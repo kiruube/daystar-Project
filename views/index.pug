@@ -1,0 +1,102 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title DayStar Daycare
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  style.
+    /* CSS for zoom effect on cards with "REQUIREMENTS" */
+    .requirements-card:hover {
+    transform: scale(1.1); /* Increase scale on hover (zoom effect) */
+    transition: transform 0.3s ease; /* Smooth transition */
+    z-index: 1;
+    cursor: pointer; /* Ensures the zoomed card appears on top */
+    }
+include nav
+// Welcoming note
+div
+  .card.text-bg-dark
+    img.card-img(src='../images/friends.jpg')
+    .card-img-overlay
+      h2.card-text
+        strong RETURN
+        br
+        |         TO LEARNING, PLAYING AND fUN!
+        br
+        br
+        a.btn.btn-primary.btn-lg.btn-heartbeat(href='/views/login.pug' role='button')
+          i.fas.fa-user
+          |  Login
+      h1.card-text
+        strong YOU&apos;RE WELCOME!
+// Sections
+section
+  br
+  .container
+    .row(style='background-image: linear-gradient(to right top, #d9f511, #d59f14, #a3592c, #572928, #000000);')
+      .col.text-center
+        img(style='max-width: 500px; padding-top: 40px;' src='./public/images/coco2.png' alt='')
+      .col.text-center
+        h3#lead MOTTO
+        p#para &quot;TO FLY ON YOUR OWN&quot;
+        br
+        h3#lead MISSION
+        p#para &quot;To build a bright future, one child at a time!&quot;
+        br
+        h3#lead VISION
+        p#para
+          | To provide a safe, happy, caring, secure and stimulating
+          br
+          |           environment where everyone feels valued and respected
+    br
+// Requirements
+section
+  h3#lead(style='margin-left: 80px;') Age Categories
+  .container(style='margin-left: 50px; margin-right: 50px;')
+    .row.row-cols-1.row-cols-md-3.g-4
+      .col
+        .card.requirements-card(style='background-image: linear-gradient(to right top, #566a88, #54779b, #4e84ae, #4192c0, #28a0d2);')
+          .card-body
+            h5#lead.card-title
+              b 3 - 5 months
+            ol#para
+              b REQUIREMENTS
+              li Expressed breast milk.
+              li Feeding bottles minimum 3.
+              li Diapers.
+              li Wipes.
+              li Baby basin (if you don&apos;t want to use the creche&apos;s).
+              li Soap of preferred choice that&apos;s not the one we use.
+              li Towel.
+              li Bedsheets.
+              li Extra clothes.
+              li Blanket.
+      // Repeat similar structure for other age categories
+// Gallery
+section
+  br
+  h3#lead(style='margin-left: 50px;') Gallery
+  br
+  .container
+    .row.justify-content-center
+      .col-8
+        #carouselExampleSlidesOnly.carousel.slide(data-bs-ride='carousel')
+          .carousel-inner
+            .carousel-item.active
+              img.d-block.w-100(src='../images/ribbons.jpg' style='width: 300px; height: 400px;')
+            .carousel-item
+              img.d-block.w-100(src='../images/pool.jpg' style='width: 300px; height: 400px;')
+            .carousel-item
+              img.d-block.w-100(src='../images/back1.jpg' alt='' style='width: 300px; height: 400px;')
+// Back to top button
+button#backToTopBtn(onclick='topFunction()' title='Go to top')
+  i.fa.fa-arrow-up
+br
+include footer
+// JavaScript
+script(src='/js/up.js')
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+
+
