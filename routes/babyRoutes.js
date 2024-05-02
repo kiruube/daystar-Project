@@ -2,21 +2,23 @@ const express = require("express");
 const router = express.Router();
 
 //Import model
-const BabyCheckInOut = require("../models/Check")
+const BabyCheckInOut = require("../models/Check");
 const StaffRegistration = require("../models/StaffRegistration");
 const RegisterBaby = require("../models/RegisterBabies");
+
+//Get route
 router.get("/register", (req, res) => {
   res.render("babyreg");
 });
 
-// post route for the sign up form
+// post route
 //installing the async function
 router.post("/register", async (req, res) => {
   try {
     const baby = new RegisterBaby(req.body);
     console.log(baby);
     await baby.save();
-    res.redirect("/babyList");
+    res.redirect("/register");
   } catch (error) {
     res.status(400).send("Sorry! Something wrong happened");
     console.log("Error registering a baby.", error);
@@ -49,30 +51,24 @@ router.post("/delete", async (req, res) => {
 router.get("/babyUpdate/:id", async (req, res) => {
   try {
     const babyUpdate = await RegisterBaby.findOne({ _id: req.params.id });
-    if (!babyUpdate) {
-      return res.status(404).send("Baby not found");
-    }
     res.render("babyUpdate", { baby: babyUpdate });
   } catch (error) {
     console.error("Error finding baby", error);
-    res.status(500).send("Internal Server Error");
+    res.status(400).send("Internal Server Error");
   }
 });
 
-router.post("/babyUpdate/:id", async (req, res) => {
+router.post("/babyUpdate", async (req, res) => {
   try {
-    const updatedBaby = await RegisterBaby.findOneAndUpdate(
-      { _id: req.params.id },
+    await RegisterBaby.findOneAndUpdate(
+      { _id: req.query.id },
       req.body,
       { new: true }
     );
-    if (!updatedBaby) {
-      return res.status(404).send("Baby not found");
-    }
     res.redirect("/babyList");
   } catch (error) {
     console.error("Error updating baby:", error);
-    res.status(500).send("Internal Server Error");
+    res.status(404).send("Internal Server Error");
   }
 });
 
@@ -97,7 +93,8 @@ router.get("/checkin", async (req, res) => {
 router.post("/checkin", async (req, res) => {
   try {
     // Extract data from the check-in form
-    const { babyName, personBrought, contactBrought, periodOfStay, sitter } = req.body;
+    const { babyName, personBrought, contactBrought, periodOfStay, sitter } =
+      req.body;
 
     // Capture the check-in time
     const checkinTime = new Date();
@@ -110,7 +107,7 @@ router.post("/checkin", async (req, res) => {
       periodOfStay,
       sitter,
       checkinTime,
-      eventType: "checkin"
+      eventType: "checkin",
     });
 
     // Save the check-in entry to the database

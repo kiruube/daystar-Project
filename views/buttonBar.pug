@@ -51,16 +51,18 @@ head
     /* Add spacing between the icon and text */
     color: #000000;
     /* Adjust icon color for contrast */
-    }
+    } 
 .button-bar
-  button#btn-adminActivity.btn(onclick="navigateToHtml('../views/admin-activity.html')") Activity
-  button#btn-adminBabyReg.btn(onclick="navigateToHtml('../views/admin-babyreg.html')") Baby Registration
-  button#btn-adminSitterReg.btn(onclick="navigateToHtml('../views/admin-sitterreg.html')") Sitter Registration
-  button#btn-adminBabies.btn(onclick="navigateToHtml('../views/admin-babies.html')") Registered Babies
-  button#btn-adminStuff.btn(onclick="navigateToHtml('../views/admin-stuff.html')") Registered Stuff
+  a.btn-dashboard.btn(href='/dashboard') Dashboard
+  a.btn-babyRegistration.btn(href='/register') Baby Registration
+  a.btn-staffRegistration.btn(href='/staff') staff Registration
+  a.btn-registeredBabies.btn(href='/babyList') Registered Babies
+  a.btn-registeredStaff.btn(href='/staffList') Registered Staff
+  a.btn-accounts.btn(href='/accounts') Accounts
+  a.btn-purchase.btn(href='/purchase') Purchase
   div
     // Logout Icon Button
-    button#logoutButton.btn(onclick="logout((href ='/logout', logout))")
+    button#logoutButton.btn(href ='/logout', logout)
       i.fas.fa-power-off
       |  Logout
 // Bootstrap JS and dependencies (e.g., Chart.js)

@@ -24,10 +24,18 @@ head
         label(for='itemName') Item Name:
         input#itemName.form-control(type='text' name='itemName')
         #itemNameError.error-message
+        .form-group
+        label(for='date') Date Of Delievery:
+        input#date.form-control(type='date' name='dateOfDelievery')
+        #dateError.error-message
       .form-group
         label(for='itemPrice') Unit(Kg,L,pcs):
         input#itemUnit.form-control(type='text' name='itemUnit')
         #itemUnitError.error-message
+      .form-group
+        label(for='itemQuantity') Quantity:
+        input#itemQuantity.form-control(type='number' name='itemQuantity')
+        #itemQuantityError.error-message
       .form-group
         label(for='itemPrice') Item Price (UGX):
         input#itemPrice.form-control(type='number' name='itemPrice')
@@ -36,6 +44,10 @@ head
         label(for='itemDescription') Description:
         textarea#itemDescription.form-control(type='text' rows='3' name='itemDescription')
         #itemDescriptionError.error-message
+      .form-group
+        label(for='supplier') Supplier:
+        input#supplier.form-control(type='text' name='supplier')
+        #supplierError.error-message
       .form-group
         label(for='itemImage') Item Image:
         input#itemImage.form-control-file(type='file' accept='image/*' name='itemImage')

@@ -7,3 +7,159 @@ var storage = multer.diskStorage({
   },
 });
 var upload = multer({ storage: storage });
+
+
+
+
+//fetching list all babies clocked in from database 
+ router.get("/babyClockIn", async (req, res)=> {
+   try {
+     let babies = await BabiesRegisterModel.find({status: "ClockedIn"})
+     res.render("./babies/renderBabyClockIn", {babies:babies}) // to display babies from data base
+     console.log("display babies clocked in", babies);
+
+   } catch (error) {
+      res.status(400).send("unable to find babies from database!");
+      console.log("unable to find babies from database!...", error );
+   }
+   })
+
+
+   //clockin baby route for form in database
+ router.get("/babyClockIn/:id", async(req, res)=> { 
+   try{
+      const sitters  = await SittersModel.find()
+     const babyClockIn = await BabiesRegisterModel.findOne({_id: req.params.id});
+     res.render("./babies/babyClockIn", {
+      baby:babyClockIn,
+      sitters:sitters
+   });
+
+   } catch(error){
+      console.log("error finding a baby!", error);
+      res.status(400).send("unable to find baby from the db!");  
+   }
+ })
+
+ router.post("/babyClockIn", async(req, res)=> {
+   try {
+      await BabiesRegisterModel.findOneAndUpdate({_id: req.query.id}, req.body);
+      res.redirect("/babyClockIn");
+
+   } catch (error) {
+      res.status(404).send("unable to update baby in the db!");  
+   }
+ })
+
+
+
+ .container
+          h1 child Clocking In
+          form#registrationForm(action= '/babyClockIn?id='+baby._id  method='POST')
+             .form-group
+              label(for='name') Name:
+              input#name(type='text' name='name' value= baby.name readonly)    
+             .form-group
+              label(for='sitter') Sitter:
+              select#sitter.form-control(name='sitter')
+                 if sitters.length
+                 each sitter in sitters
+                     option(value=sitter_id) #{sitter.name}
+              small#sitterErr
+              .form-group
+                 label(for='childBroughtBy') Child Brought by:
+                 input#childBroughtBy(type='text' name='childBroughtBy' value= baby.childBroughtBy)
+               .form-group
+                 label(for='arrivalTime') Arrival Time:
+                 input#arrivalTime(type='time' name='arrivalTime' value= baby.arrivalTime)
+               .form-group
+                 label(for='paidFee')  Paid Fee(UGX):
+                 input#paidFee(type='text' name='paidFee' value= baby.paidFee)
+               .form-group
+                 input#status(type='hidden' name='status'  value= 'ClockedIn')
+               .form-group
+                 label(for='childNumber') Child Number:
+                 input#childNumber(type='text' name='childNumber' value= baby.childNumber)
+                 input.text-bg-success(type='submit' value='Clock-In')
+
+
+
+
+
+
+
+                 .container
+          h1 Children Clock Out
+          form#registrationForm(action= '/ClockingOut?id='+baby._id  method='POST')
+            .form-group
+              label(for='name')  Name:
+              input#name(type='text' name='name' value=baby.name readonly )
+            .form-group
+              label(for='sitter') Sitter:
+              select#sitter.form-control(name='sitter')
+                 if sitters.length
+                 each sitter in sitters
+                     option(value=sitter_id) #{sitter.name}
+              small#sitterErr
+              .form-group
+              label(for='paidFee')  Paid Fee(UGX):
+              input#paidFee(type='text' name='paidFee'  value=baby.paidFee)
+            .form-group
+              label(for='comment')  Comment:
+              input#comment(type='text' name='comment'  value=baby.comment)
+            .form-group
+              label(for='status') Status:
+              input#status(type='text' name='status'  value=baby.status)
+            .form-group
+              label(for='childPickedBy') Child Picked by:
+              input#childPickedBy(type='text' name='childPickedBy'  value=baby.childPickedBy)
+            .form-group
+              label(for='departureTime') Departure Time:
+              input#departureTime(type='time' name='departureTime'  value=baby.departureTime)
+            .form-group
+              label(for='childNumber') Child Number:
+              input#childNumber(type='text' name='childNumber'  value=baby.childNumber)
+            input.text-bg-success(type='submit' value='Clock-Out')
+
+
+
+
+
+
+
+            //fetching list babies clocked Out from database 
+ router.get("/clockingOutList", async (req, res)=> {
+   try {
+     let babies = await BabiesRegisterModel.find({status: "ClockedOut"})
+     res.render("./babies/renderBabyClockOut", {babies:babies}) // to display babies from data base
+     console.log("display babies clocked out", babies);
+
+   } catch (error) {
+      res.status(400).send("unable to find babies from database!");
+      console.log("unable to find babies from database!...", error );
+   }
+   })
+   //clockOut baby route for form in database
+  router.get("/ClockingOut/:id", async(req, res)=> { 
+   try{  
+    const sitters  = await SittersModel.find()
+     const babyClockOut = await BabiesRegisterModel.findOne({_id: req.params.id});
+     res.render("./babies/babyClockOut", {
+      baby:babyClockOut,
+        sitters:sitters
+   });
+   } catch(error){
+      console.log("error finding a baby!", error);
+      res.status(400).send("unable to find baby from the db!");  
+   }
+ })
+
+ router.post("/ClockingOut", async(req, res)=> {
+   try {
+      await BabiesRegisterModel.findOneAndUpdate({_id: req.query.id}, req.body);
+      res.redirect("/clockingOutList");
+
+   } catch (error) {
+      res.status(404).send("unable to update baby in the db!");  
+   }
+ })

@@ -46,8 +46,10 @@ html(lang="en")
               td= baby.sitter
               td= baby.checkinTime
               td
-                button.btn.btn-danger.btn-sm(type="button") Delete
-                button.btn.btn-primary.btn-sm(type="button") Update
+                button.btn.btn-danger.btn-sm(type="button" href='') Delete
+              td  
+                button.btn.btn-primary.btn-sm(type="button", href='') Update
+              td  
                 a.btn.btn-success.btn-sm(type="button", href=`/checkout/${baby._id}`) Checkout
 
     include footer               

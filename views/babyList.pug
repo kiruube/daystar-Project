@@ -73,7 +73,7 @@ br
               td #{baby.fatherEmail}
               td #{baby.location}
               td 
-                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update 
+                a.btn.btn-danger(href="/babyUpdate/"+baby._id) Update 
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)

@@ -1,0 +1,45 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Dashboard
+  link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+  link(rel='stylesheet' href='/css/style.css')
+  style.
+    .card {
+    margin-bottom: 20px;
+    color:black;
+    }
+include nav 
+include buttonBar
+.container
+  .row
+    .col-md-6
+      .card
+        .card-body
+          h4.card-title Babies Present
+          p.card-text Total: 50
+          a.btn.btn-primary(href='/checkin') CheckIn
+    .col-md-6
+      .card
+        .card-body
+          h4.card-title Enrolled Babies
+          p.card-text Total: 20
+          a.btn.btn-primary(href='/babyList') View Details
+  .row
+    .col-md-6
+      .card
+        .card-body
+          h4.card-title Accounts
+          p.card-text Total income: 30
+          p.card-text Total expenses: 30
+          a.btn.btn-primary(href='/accrecords') View Details
+    .col-md-6
+      .card
+        .card-body
+          h4.card-title Staff Members
+          p.card-text Total Staff Members: 10
+          p.card-text Total Staff Members Available: 10
+          a.btn.btn-primary(href='/staffList') View Details
+include footer
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

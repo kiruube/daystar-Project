@@ -18,6 +18,7 @@ const AdminRegistration = require("./models/adminRegistration");
 const port = 3003;
 
 // import routes
+const accountsRoutes = require("./routes/accountsRoutes")
 const registrationRoutes = require("./routes/babyRoutes");
 const adminRegistration = require("./routes/adminRegRoutes");
 const authenticationRoutes = require("./routes/authenticationRoutes");
@@ -63,12 +64,13 @@ passport.use(AdminRegistration.createStrategy());
 passport.serializeUser(AdminRegistration.serializeUser());
 passport.deserializeUser(AdminRegistration.deserializeUser());
 
-
 //Use imported routes
 app.use("/", registrationRoutes);
 app.use("/", adminRegistration);
 app.use("/", authenticationRoutes);
 app.use("/", dollStallRoutes);
+app.use("/", accountsRoutes);
+
 // For invalid routes
 app.get("*", function (req, res) {
     res.send("404! This is an invalid URI");
