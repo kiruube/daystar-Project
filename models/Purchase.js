@@ -5,17 +5,33 @@ const PurchaseSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    dateOfDelievery:{
+        type: String,
+        trim: true  
+    },
     itemUnit:{
         type: String,
         trim: true
     },
-    itemPrice:{
+    itemQuantity:{
         type: String,
+        trim: true
+    },
+    rate:{
+        type: Number,
+        trim: true
+    },
+    total:{
+        type: Number,
         trim: true
     },
     itemDescription:{
         type: String,
         trim: true
+    },
+    supplier:{
+        type: String,
+        trim: true 
     },
     itemImage:{
         type: String,

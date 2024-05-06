@@ -8,21 +8,20 @@ const expressSession = require("express-session")({
     secret: "secret",
     resave: false,
     saveUninitialized: false
-  });
-  
+  }); 
 require("dotenv").config();
 
 // import models
 const AdminRegistration = require("./models/adminRegistration");
 // set port
-const port = 3003;
+const port = 3001;
 
 // import routes
 const accountsRoutes = require("./routes/accountsRoutes")
 const registrationRoutes = require("./routes/babyRoutes");
 const adminRegistration = require("./routes/adminRegRoutes");
 const authenticationRoutes = require("./routes/authenticationRoutes");
-const dollStallRoutes = require("./routes/dollStallRoutes");
+const purchasesRoutes = require("./routes/purchases");
 //instantiate the app
 const app = express();
 
@@ -68,7 +67,7 @@ passport.deserializeUser(AdminRegistration.deserializeUser());
 app.use("/", registrationRoutes);
 app.use("/", adminRegistration);
 app.use("/", authenticationRoutes);
-app.use("/", dollStallRoutes);
+app.use("/", purchasesRoutes);
 app.use("/", accountsRoutes);
 
 // For invalid routes

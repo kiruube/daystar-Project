@@ -112,6 +112,10 @@ const babyregistrationSchema = new mongoose.Schema({
   relationshipStatus: {
     type: String,
     trim: true,
+  },
+  status:{
+    type: String,
+    trim: true
   }
 });
 module.exports = mongoose.model("RegisterBaby", babyregistrationSchema );

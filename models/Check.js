@@ -4,34 +4,44 @@ const mongoose = require("mongoose");
 const babyCheckInOutSchema = new mongoose.Schema({
   babyName: {
     type: String,
-    required: true
+    trim: true
   },
-  person: {
+  personBrought: {
     type: String,
-    required: true
+    trim: true
   },
-  contact: {
+  contactBrought: {
     type: String,
-    required: true
+    trim:true
   },
   periodOfStay: {
     type: String,
-    enum: ["fullDay", "halfDay"] // Specifies that periodOfStay can only be "fullDay" or "halfDay"
+    enum: ["Full Day(UGX 15,000)", "Half Day(UGX 10,000)"] // Specifies the periodOfStay
   },
   sitter: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "StaffRegistration"
   },
   checkinTime: {
-    type: Date
+    type: Date,
+    trim: true
+  },
+  personPickingUp:{
+    type: String,
+    trim: true
+  },
+  contactNumber:{
+    type: String,
+    trim: true
   },
   checkoutTime: {
-    type: Date
+    type: Date,
+    trim:true
   },
   eventType: {
     type: String,
     enum: ["checkin", "checkout"],
-    required: true
+    trim: true
   },
   checkoutNotes: {
     type: String

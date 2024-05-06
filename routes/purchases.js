@@ -34,20 +34,20 @@ router.post("/purchase", upload.single('imageupload'), async (req, res) => {
 });
 
 // Retrieve all Purchases
-router.get("/purchaselist", async (req, res) => {
+router.get("/purchaseslists", async (req, res) => {
     if (req.session.user) {
         try {
-            let items = await Purchase.find();
+            let purchases = await Purchase.find();
             res.render("purchaselist", {
                 title: "Purchase List",
-                purchases: items
+                purchases: purchases
             });
         } catch (error) {
             console.error("Error retrieving purchases:", error);
             res.status(500).send("Internal Server Error");
         }
     } else {
-        res.redirect("/purchaselist");
+        res.redirect("/login");
     }
 });
 
@@ -83,7 +83,7 @@ router.post("/purchase/update/:id", async (req, res) => {
         if (!purchase) {
             return res.status(404).send("Purchase not found");
         }
-        res.redirect("/purchaselist");
+        res.redirect("/purchaseslists");
     } catch (error) {
         console.error("Error updating purchase:", error);
         res.status(500).send("Internal Server Error");

@@ -37,9 +37,13 @@ head
         input#itemQuantity.form-control(type='number' name='itemQuantity')
         #itemQuantityError.error-message
       .form-group
-        label(for='itemPrice') Item Price (UGX):
-        input#itemPrice.form-control(type='number' name='itemPrice')
-        #itemPriceError.error-message
+        label(for='rate') Rate(UGX):
+        input#rate.form-control(type='number' name='rate')
+        #rateError.error-message
+      .form-group
+        label(for='total') Total Amount(UGX):
+        input#total.form-control(type='number' name='total')
+        #totalError.error-message
       .form-group
         label(for='itemDescription') Description:
         textarea#itemDescription.form-control(type='text' rows='3' name='itemDescription')

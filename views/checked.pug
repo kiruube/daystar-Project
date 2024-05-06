@@ -23,7 +23,7 @@ html(lang="en")
      }
   body
     include nav 
-    include buttonBar
+    include attend
     .container.mt-4
       h2 Checked-in Babies
       table.table
@@ -39,16 +39,16 @@ html(lang="en")
         tbody
           each baby in babies
             tr
-              td= baby.babyName
-              td= baby.personBringing
-              td= baby.contactNumber
-              td= baby.periodOfStay
-              td= baby.sitter
-              td= baby.checkinTime
+              td #{baby.babyName}
+              td #{baby.personBrought}
+              td #{baby.contactBrought}
+              td #{baby.periodOfStay}
+              td #{baby.sitter.fullName}
+              td #{baby.checkinTime}
               td
-                button.btn.btn-danger.btn-sm(type="button" href='') Delete
-              td  
                 button.btn.btn-primary.btn-sm(type="button", href='') Update
+              td
+                button.btn.btn-danger.btn-sm(type="button" href='') Delete  
               td  
                 a.btn.btn-success.btn-sm(type="button", href=`/checkout/${baby._id}`) Checkout
 

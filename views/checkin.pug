@@ -6,15 +6,11 @@ html(lang='en')
     title Baby Check-In
     link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
     link(rel='stylesheet' href='/css/style.css')
-
   body
     include nav
-    include buttonBar
-
+    include attend
     .container.mt-4.mb-4.bg-white.p-4.border(style='color: black;')
       h2.mb-4 Check In Baby
-
-      // Check-in form
       form#checkinForm(action='/checkin' method='POST')
         .form-group
           label(for='babyName') Baby Name
@@ -35,19 +31,17 @@ html(lang='en')
           label Period of Stay
           br
           .form-check.form-check-inline
-            input#fullDay.form-check-input(type='radio' name='periodOfStay' value='fullDay' checked='')
+            input#fullDay.form-check-input(type='radio' name='periodOfStay' value='Full Day(UGX 15,000)' checked='')
             label.form-check-label(for='fullDay') Full Day (UGX 15,000)
           .form-check.form-check-inline
-            input#halfDay.form-check-input(type='radio' name='periodOfStay' value='halfDay')
+            input#halfDay.form-check-input(type='radio' name='periodOfStay' value='Half Day(UGX 10,000)')
             label.form-check-label(for='halfDay') Half Day (UGX 10,000)
-
-        .form-group
-          label(for='sitter') Assign Sitter
-          select#sitter.form-control(name='sitter')
-            option(value='') Select Sitter
-            each sitter in availableSitters
-              option(value=sitter._id) #{sitter.fullName}
-
+          .form-group
+            label(for='sitter') Assign Sitter
+            select#sitter.form-control(name='sitter')
+              option(value='') Select Sitter
+              each sitter in availableSitters
+                option(value=sitter._id) #{sitter.fullName}
         button.btn.btn-primary(type='submit') Check In
 
 include footer
