@@ -46,9 +46,11 @@ html(lang="en")
               td #{baby.sitter.fullName}
               td #{baby.checkinTime}
               td
-                button.btn.btn-primary.btn-sm(type="button", href='') Update
+                a.btn.btn-primary.btn-sm(type="button", href=`/checkinupdate/${baby._id}`) Update
               td
-                button.btn.btn-danger.btn-sm(type="button" href='') Delete  
+                form(action=`/checkedin/${baby._id}`, method="POST")
+                   input(type="hidden", name="_method", value="DELETE")
+                   button.btn.btn-danger.btn-sm(type="submit") Delete  
               td  
                 a.btn.btn-success.btn-sm(type="button", href=`/checkout/${baby._id}`) Checkout
 

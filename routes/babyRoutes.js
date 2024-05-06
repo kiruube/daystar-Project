@@ -122,6 +122,72 @@ router.get("/checked", async (req, res) => {
   }
 });
 
+router.get("/checkinupdate/:id", async (req, res) => {
+  try {
+    // Find the checked-in baby record by ID
+    const babyCheckInOut = await BabyCheckInOut.findById(req.params.id);
+
+    // Check if the checked-in baby exists
+    if (!babyCheckInOut || babyCheckInOut.eventType !== "checkin") {
+      // If the baby does not exist or is not checked in, return a 404 error
+      return res.status(404).send("Checked-in baby not found");
+    }
+
+    // Fetch list of babies from the database
+    const babies = await RegisterBaby.find();
+    const availableSitters = await StaffRegistration.find({ role: "Sitter" }).select('fullName');
+
+    // Render the update form with the checked-in baby's data, list of babies, and baby's name
+    res.render("checkinupdate", { baby: babyCheckInOut, babies: babies, availableSitters: availableSitters, babyName: babyCheckInOut.babyName });
+  } catch (error) {
+    console.error("Error rendering check-in update form:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/checkinupdate/:id", async (req, res) => {
+  try {
+    const babyId = req.params.id;
+
+    // Update the checked-in baby record in the database with the new fields
+    const updatedBabyCheckInOut = await BabyCheckInOut.findOneAndUpdate(
+      { _id: babyId, eventType: "checkin" }, // Match condition
+      { $set: req.body }, // Update with the request body
+      { new: true } // To return the updated document
+    );
+
+    // If the checked-in baby record was not found, return a 404 error
+    if (!updatedBabyCheckInOut) {
+      return res.status(404).send("Checked-in baby not found");
+    }
+
+    // Redirect to the page where checked-in babies are listed
+    res.redirect("/checked");
+  } catch (error) {
+    console.error("Error updating checked-in baby record:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to delete a checked-in baby
+router.post("/checkedin/:id", async (req, res) => {
+  try {
+    if (req.body._method === 'DELETE') {
+      const babyId = req.params.id;
+  
+      // Find and delete the checked-in baby by ID
+      await BabyCheckInOut.findByIdAndDelete(babyId);
+  
+      // Redirect to the page where checked-in babies are listed
+      res.redirect("/checked");
+    } else {
+      res.status(400).send("Invalid request");
+    }
+  } catch (error) {
+    console.error("Error deleting checked-in baby:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 router.get("/checkout/:id", async (req, res) => {
   try {
@@ -197,7 +263,6 @@ router.get("/checkoutupdate/:id", async (req, res) => {
   }
 });
 
-
 router.post("/checkoutupdate/:id", async (req, res) => {
   try {
     const babyId = req.params.id;
@@ -211,7 +276,5 @@ router.post("/checkoutupdate/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
-
 
 module.exports = router;

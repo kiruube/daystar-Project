@@ -53,7 +53,7 @@ br
               td #{staff.education}
               td #{staff.nok}
               td 
-                a.btn.btn-primary(href="/RegUpdate/"+staff._id) Update 
+                a.btn.btn-success(href="/RegUpdate/"+staff._id) Update 
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=staff._id)

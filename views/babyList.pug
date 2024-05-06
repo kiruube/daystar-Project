@@ -75,11 +75,11 @@ br
               td #{baby.location}
               td #{baby.status}
               td 
-                a.btn.btn-danger(href="/babyUpdate/"+baby._id) Update 
+                a.btn.btn-success(href="/babyUpdate/"+baby._id) Update
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-primary(type="submit") Delete
+                  button.btn.btn-danger(type="submit") Delete
           else if baby.parentResponsibility === 'mother'
             tr 
               td #{baby.babyNumber}
@@ -91,11 +91,11 @@ br
               td #{baby.motherEmail}
               td #{baby.location}
               td 
-                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update
+                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-primary(type="submit") Delete
+                  button.btn.btn-danger(type="submit") Delete
           else if  baby.parentResponsibility === 'both'
             tr 
               td #{baby.babyNumber}
@@ -107,11 +107,11 @@ br
               td #{baby.motherEmail+' and '+ baby.fatherEmail}
               td #{baby.location}
               td 
-                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update
+                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-primary(type="submit") Delete
+                  button.btn.btn-danger(type="submit") Delete
           else if  baby.parentResponsibility === 'other'
             tr 
               td #{baby.babyNumber}
@@ -123,11 +123,11 @@ br
               td #{baby.guardianEmail}
               td #{baby.location}
               td 
-                a.btn.btn-danger(href="/babyUpdate/"+ baby._id) Update 
+                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update 
               td  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-primary(type="submit") Delete
+                  button.btn.btn-danger(type="submit") Delete
 br
 include footer      
 // Bootstrap JS and dependencies (e.g., Chart.js)

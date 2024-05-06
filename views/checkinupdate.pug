@@ -1,0 +1,49 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Update Baby Checked-In 
+    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='/css/style.css')
+  body
+    include nav
+    include attend
+    .container.mt-4.mb-4.bg-white.p-4.border(style='color: black;')
+      h2.mb-4 Check In Baby
+      form#checkinForm(action=`/checkinupdate/${baby._id}` method='POST')
+      
+        .form-group
+          label(for='babyName') Baby Name
+          input#babyName.form-control(type='text' name='babyName' value=baby.babyName placeholder='Enter baby\'s name' readonly)
+
+        .form-group
+          label(for='personBrought') Person Who Brought
+          input#personBrought.form-control(type='text' name='personBrought' value=baby.personBrought  placeholder='Enter name of person who brought the baby')
+
+        .form-group
+          label(for='contactBrought') Contact for Person Who Brought
+          input#contactBrought.form-control(type='text' name='contactBrought' value=baby.contactBrought placeholder='Enter contact number or email')
+
+        .form-group
+          label Period of Stay
+          br
+          .form-check.form-check-inline
+            input#fullDay.form-check-input(type='radio' name='periodOfStay' value='Full Day(UGX 15,000)' checked=baby.periodOfStay ==='Full Day(UGX 15,000)')
+            label.form-check-label(for='fullDay') Full Day (UGX 15,000)
+          .form-check.form-check-inline
+            input#halfDay.form-check-input(type='radio' name='periodOfStay' value='Half Day(UGX 10,000)' checked=baby.periodOfStay ==='Half Day(UGX 10,000)')
+            label.form-check-label(for='halfDay') Half Day (UGX 10,000)
+        .form-group
+          label(for='sitter') Assign Sitter
+          select#sitter.form-control(name='sitter')
+            option(value='') Select Sitter
+            each sitter in availableSitters
+              if sitter._id.toString() === baby.sitter.toString()
+                option(value=sitter._id, selected) #{sitter.fullName}
+              else
+                option(value=sitter._id) #{sitter.fullName}
+        button.btn.btn-success(type='submit') Update
+
+include footer
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
