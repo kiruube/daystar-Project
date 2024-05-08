@@ -55,7 +55,7 @@ br
               td 
                 a.btn.btn-success(href="/RegUpdate/"+staff._id) Update 
               td  
-                form(method="POST" action="/delete")
+                form(method="POST" action="/staffdelete")
                   input(type="hidden" name="id" value=staff._id)
                   button.btn.btn-danger(type="submit") Delete
 include footer                  

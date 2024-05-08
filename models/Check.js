@@ -23,7 +23,7 @@ const babyCheckInOutSchema = new mongoose.Schema({
     ref: "StaffRegistration"
   },
   checkinTime: {
-    type: Date,
+    type: String,
     trim: true
   },
   personPickingUp:{
@@ -35,7 +35,7 @@ const babyCheckInOutSchema = new mongoose.Schema({
     trim: true
   },
   checkoutTime: {
-    type: Date,
+    type: String,
     trim:true
   },
   eventType: {

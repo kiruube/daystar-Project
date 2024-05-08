@@ -54,11 +54,12 @@ include buttonBar
                 td #{record.recordDescription}
                 td #{record.recordAmount}
                 td 
-                  a.btn.btn-primary(href='/accountsupdate/'+record._id) Update
+                  a.btn.btn-primary(href=`/accountsupdate/${record._id}`) Update
                 td  
-                  form(method="POST" action="/delete")
-                     input(type="hidden" name="id" value= record._id)
+                  form(method="POST" action="/accountdelete" )
+                     input(type="hidden" name="id" value=record._id)
                      button.btn.btn-danger(type="submit") Delete
+
 br          
 include footer      
 // Bootstrap JS and dependencies (e.g., Chart.js)

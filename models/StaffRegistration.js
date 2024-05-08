@@ -9,11 +9,10 @@ const staffRegistrationSchema = new mongoose.Schema({
     gender:{
         type: String,
         trim: true
-
     },
 
     dateOfBirth:{
-        type: Date,
+        type: String,
         trim: true
     },
 

@@ -44,7 +44,7 @@ include buttonBar
             td
                img(src=purchase.itemImage, alt='Item Image', style='max-width: 100px;')
             td #{purchase.itemName}
-            td #{purchase.dateOfDelievery}
+            td #{purchase.dateOfDelivery}
             td #{purchase.itemUnit}
             td #{purchase.itemQuantity}
             td #{purchase.itemDescription}
@@ -52,10 +52,11 @@ include buttonBar
             td #{purchase.rate}
             td #{purchase.total}
             td
-              a.btn.btn-danger(href=`/purchase/update/${purchase._id}`) Update 
-              form(method="POST" action="/delete")
+              a.btn.btn-success(href=`/purchase/update/${purchase._id}`) Update
+            td   
+              form(method="POST" action="/purchasedelete")
                 input(type="hidden" name="id" value=purchase._id)
-                button.btn.btn-primary(type="submit") Delete
+                button.btn.btn-danger(type="submit") Delete
 
 include footer
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

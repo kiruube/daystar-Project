@@ -53,14 +53,14 @@ head
 .button-bar
   a.btn-dashboard.btn(href='/dashboard') Dashboard
   a.btn-babyRegistration.btn(href='/register') Baby Registration
-  a.btn-staffRegistration.btn(href='/staff') staff Registration
+  a.btn-staffRegistration.btn(href='/staff') Staff Registration
   a.btn-registeredBabies.btn(href='/babyList') Registered Babies
   a.btn-registeredStaff.btn(href='/staffList') Registered Staff
   a.btn-accounts.btn(href='/accounts') Accounts
   a.btn-purchase.btn(href='/purchase') Procurement
   a.btn-inventory.btn(href='/purchaseslists') Inventory
   div
-    button#logoutButton.btn(href ='/logout', logout)
+    a.btn(href ='/logout' role="button")
       i.fas.fa-power-off
       |  Logout
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

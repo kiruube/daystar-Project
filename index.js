@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");//new line
 const path = require("path");
 const passport = require("passport");
-// const momoent = require("momoent");
+const moment = require("moment");
 const expressSession = require("express-session")({
     secret: "secret",
     resave: false,
@@ -22,6 +22,7 @@ const registrationRoutes = require("./routes/babyRoutes");
 const adminRegistration = require("./routes/adminRegRoutes");
 const authenticationRoutes = require("./routes/authenticationRoutes");
 const purchasesRoutes = require("./routes/purchases");
+const reportRoutes= require("./routes/reportRoutes");
 //instantiate the app
 const app = express();
 
@@ -41,6 +42,7 @@ mongoose.connection
     console.error(`Connection error: ${err.message}`);
  });
 
+ app.locals.moment = moment;
 
 // set view engine to pug
 app.set("view engine", "pug");
@@ -52,6 +54,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());//new line
+
 
 // express session configs
 app.use(expressSession);
@@ -69,6 +72,7 @@ app.use("/", adminRegistration);
 app.use("/", authenticationRoutes);
 app.use("/", purchasesRoutes);
 app.use("/", accountsRoutes);
+app.use("/", reportRoutes);
 
 // For invalid routes
 app.get("*", function (req, res) {

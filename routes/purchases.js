@@ -4,7 +4,7 @@ const multer = require("multer");
 const Purchase = require("../models/Purchase");
 
 // Image upload
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "public/images/uploads");
     },
@@ -12,26 +12,41 @@ var storage = multer.diskStorage({
         cb(null, file.originalname);
     },
 });
-var upload = multer({ storage: storage });
+let upload = multer({ storage: storage });
 
 // Get purchase form
 router.get("/purchase", (req, res) => {
     res.render("purchase");
 });
 
-// Post route for Purchase
+// POST route for Purchase form submission
 router.post("/purchase", upload.single('imageupload'), async (req, res) => {
     try {
-        const purchase = new Purchase(req.body);
-        purchase.itemImage = req.file.path;
-        console.log("purchase", purchase);
+        let itemImage = '';
+        if (req.file && req.file.path) {
+            itemImage = req.file.path;
+        }
+
+        const purchase = new Purchase({
+            itemName: req.body.itemName,
+            dateOfDelivery: req.body.dateOfDelivery,
+            itemUnit: req.body.itemUnit,
+            itemQuantity: req.body.itemQuantity,
+            itemDescription: req.body.itemDescription,
+            supplier: req.body.supplier,
+            rate: req.body.rate,
+            total: req.body.total,
+            itemImage: itemImage
+        });
+
         await purchase.save();
-        res.redirect("/purchase");
+        res.redirect("/purchaseslists");
     } catch (error) {
+        console.error("Error adding item.", error);
         res.status(400).render("purchase", { title: "Add Purchase" });
-        console.log("Error adding item.", error);
     }
 });
+
 
 // Retrieve all Purchases
 router.get("/purchaseslists", async (req, res) => {
@@ -52,7 +67,7 @@ router.get("/purchaseslists", async (req, res) => {
 });
 
 // Deleting an item from the database
-router.post("/delete", async (req, res) => {
+router.post("/purchasedelete", async (req, res) => {
     try {
         await Purchase.deleteOne({ _id: req.body.id });
         res.redirect("back");
@@ -69,7 +84,7 @@ router.get("/purchase/update/:id", async (req, res) => {
         if (!purchase) {
             return res.status(404).send("Purchase not found");
         }
-        res.render("update_purchase", { title: "Update Purchase", purchase });
+        res.render("purchaseupdate", { title: "Update Purchase", purchase });
     } catch (error) {
         console.error("Error finding purchase:", error);
         res.status(500).send("Internal Server Error");

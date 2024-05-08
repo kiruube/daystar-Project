@@ -63,14 +63,14 @@ router.get("/staffList", async (req, res) => {
 });
 
 //Deleting a staffmember in the database
-router.post("/delete", async (req, res) => {
+router.post("/staffdelete", async (req, res) => {
   try {
     await StaffRegistration.deleteOne({ _id: req.body.id });
     console.log(req.body);
     res.redirect("back");
   } catch (error) {
-    res.status(400).send("Unable to delete staffmember!");
-    console.log("Error deleting  staffmember...", error);
+    res.status(400).send("Unable to delete staff member!");
+    console.log("Error deleting staff member...", error);
   }
 });
 

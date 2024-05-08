@@ -5,7 +5,7 @@ const PurchaseSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    dateOfDelievery:{
+    dateOfDelivery:{
         type: String,
         trim: true  
     },

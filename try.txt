@@ -223,3 +223,98 @@ html(lang='en')
 include footer
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
 " saved in a file named checkinupdate, the data on the table of the is of babies checked in saved in a file named "checkedin" is updated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const express = require('express');
+const router = express.Router();
+
+//Import model
+const Accounts = require('../models/accounts');
+
+// Render Accounts form
+router.get("/accounts", (req, res) => {
+    res.render("accounts"); // Assuming you have a view named "accounts"
+});
+
+// post route 
+//installing the async function
+router.post("/accounts", async (req, res) => {
+  try {
+    const records = new Accounts(req.body);
+    console.log(records);
+    await records.save();
+    res.redirect("/accounts");
+  } catch (error) {
+    res.status(400).send("Sorry! Something wrong happened");
+    console.log("Error registering record.", error);
+  }
+});
+
+// Route to fetch all accounts records
+router.get('/accrecords', async (req, res) => {
+  try {
+    const records = await Accounts.find();
+    res.render('accountslist', {records: records});
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Route to update an existing accounts record
+router.get("/accountsupdate/:id", async (req, res) => {
+  try {
+      const recordupdate = await Accounts.findOne({ _id: req.params.id });
+      console.log("Record Type:", recordupdate.recordType);
+      res.render("accountsupdate", { record: recordupdate });
+  } catch (error) {
+      console.error("Error finding record:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+// Route to handle submission of the update form
+router.post('/accountsupdate', async (req, res) => {
+  try {
+    const { id, ...updateFields } = req.body;
+
+    const updatedRecord = await Accounts.findOneAndUpdate(
+      { _id: id },
+      updateFields,
+      { new: true }
+    );
+
+    if (!updatedRecord) {
+      return res.status(404).json({ message: "Record not found" });
+    }
+
+    res.redirect("/accrecords");
+  } catch (err) {
+    console.error("Error updating record:", err);
+    res.status(500).json({ message: "Error updating Record.." });
+  }
+});
+
+
+// Route to delete an existing accounts record
+router.post('/accountdelete', async (req, res) => {
+  try {
+    await Accounts.deleteOne({_id: req.body.id});
+    res.redirect("/accrecords"); // Redirect to the appropriate route after deletion
+  } catch (err) {
+    res.status(400).json({ message: "Unable to delete record.." });
+  }
+});
+
+module.exports = router;

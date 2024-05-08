@@ -3,7 +3,7 @@ html(lang='en')
   head
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title Update Record - Accounts. 
+    title Update Record - Accounts.
     link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css', rel='stylesheet')
     link(rel='stylesheet', href='/css/style.css')
     style.
@@ -13,36 +13,39 @@ html(lang='en')
         background-color: #fff;
         padding: 20px;
       }
-  include nav 
+      h2{
+        color: white;
+      }
+  include nav
   include buttonBar
   .container.mt-5
     h2.text-center.mb-4 Accounts Update
     .row.justify-content-center
       .col-md-6.form-container
         h4.text-center.mb-4 Update Record
-        form(action='/accountsupdate?id='+record._id  method='POST')
+        form(action=`/accounts/update/${record._id}`, method='POST')
           .form-group
             label(for='recordType') Select Record Type:
             br
-            .form-check.form-check-inline
-              input#expenseRadio.form-check-input(type='radio' name='recordType' value='expense' checked=record.recordType===expense)
-              label.form-check-label(for='expenseRadio') Expense (Money Spent)
-            .form-check.form-check-inline
-              input#incomeRadio.form-check-input(type='radio', name='recordType' value='income'  checked=record.recordType===income)
-              label.form-check-label(for='incomeRadio') Income (Money Paid to Daycare)
+          .form-check.form-check-inline
+            input#expenseRadio.form-check-input(type='radio' name='recordType' value='Expense' checked=record.recordType==='Expense')
+            label.form-check-label(for='expense') Expense (Money Spent)
+          .form-check.form-check-inline
+            input#incomeRadio.form-check-input(type='radio', name='recordType' value='Income' checked=record.recordType==='Income')
+            label.form-check-label(for='income') Income (Money Paid to Daycare)
           .form-group
             label(for='recordRefNo') Reference Number:
-            input#recordRefNo.form-control(type='text' name='recordRefNo' value=recordRefNo)
+            input#recordRefNo.form-control(type='text' name='recordRefNo' value=record.recordRefNo)
           .form-group
             label(for='recordDate') Date:
-            input#recordDate.form-control(type='date' name='recordDate' value=recordDate)
+            input#recordDate.form-control(type='date' name='recordDate' value=record.recordDate)
           .form-group
             label(for='recordDescription') Description:
-            input#recordDescription.form-control(type='text' name='recordDescription' value=recordDescription)
+            input#recordDescription.form-control(type='text' name='recordDescription' value=record.recordDescription)
           .form-group
             label(for='recordAmount') Amount (UGX):
-            input#recordAmount.form-control(type='number' min='0' step='0.01' placeholder='Enter amount in UGX' name='recordAmount' value=recordAmount)
+            input#recordAmount.form-control(type='number' min='0' step='0.01' placeholder='Enter amount in UGX' name='recordAmount' value=record.recordAmount)
           button.btn.btn-primary.btn-block(type='submit') Update Record
-  br        
+  br
   include footer
   script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

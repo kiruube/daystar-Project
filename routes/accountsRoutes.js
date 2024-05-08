@@ -33,31 +33,50 @@ router.get('/accrecords', async (req, res) => {
   }
 });
 
-// Route to update an existing accounts record
-router.get("/accountsupdate/:id", async (req,res) => {
-try {
-  const recordupdate = await Accounts.findOne({ _id: req.params.id });
-  res.render("accountsupdate", {record: recordupdate})
-} catch (error) {
-  console.err("Error finding record:", err);
-  res.status(500).json({ message: "Internal Server Error" });
-}
+// Route to render the update form with the selected account record
+router.get("/accountsupdate/:id", async (req, res) => {
+  try {
+      const record = await Accounts.findById(req.params.id);
+      if (!record) {
+          return res.status(404).send("Record not found");
+      }
+      res.render("accountsupdate", { record: record });
+  } catch (error) {
+      console.error("Error fetching account record:", error);
+      res.status(500).send("Internal Server Error");
+  }
 });
 
-router.post('/accountsupdate', async (req, res) => {
+
+// Route to handle submission of the update form
+router.post('/accounts/update/:id', async (req, res) => {
   try {
-     await Accounts.findOneAndUpdate({_id: req.query.id}, req.body,{
-      new: true,
-  });
-    res.redirect("/accountslist");
+      const { id } = req.params;
+      const updateFields = req.body;
+
+      const existingRecord = await Accounts.findById(id);
+      if (!existingRecord) {
+          return res.status(404).send("Record not found");
+      }
+
+      // Preserve creation date and time
+      updateFields.createdAt = existingRecord.createdAt;
+
+      const updatedRecord = await Accounts.findByIdAndUpdate(
+          id,
+          updateFields,
+          { new: true }
+      );
+
+      res.redirect("/accrecords");
   } catch (err) {
-    console.err("Error updating record:", err);
-    res.status(500).json({ message: "Error updating Record.." });
+      console.error("Error updating record:", err);
+      res.status(500).send("Error updating Record");
   }
 });
 
 // Route to delete an existing accounts record
-router.post('/delete', async (req, res) => {
+router.post('/accountdelete', async (req, res) => {
   try {
     await Accounts.deleteOne({_id: req.body.id});
     res.redirect("back")

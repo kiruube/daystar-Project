@@ -43,7 +43,7 @@ html(lang="en")
               td #{baby.personBrought}
               td #{baby.contactBrought}
               td #{baby.periodOfStay}
-              td #{baby.sitter.fullName}
+              td #{baby.sitter ? baby.sitter.fullName : ''}
               td #{baby.checkinTime}
               td
                 a.btn.btn-primary.btn-sm(type="button", href=`/checkinupdate/${baby._id}`) Update
