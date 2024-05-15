@@ -30,7 +30,7 @@ br
       .card
         .card-header Staff Registration Form
         .card-body
-          form#sitterRegistrationForm(action='/RegUpdate?id='+staff._id  method='POST')
+          form#sitterRegistrationForm(action='/RegUpdate?id='+staff._id  method='POST'  onsubmit='return validation(event)' name='validationForm')
             // Stuff's Information
             .form-group
               label(for='fullName') Full Name
@@ -95,5 +95,5 @@ br
 include footer
 // Bootstrap JS and dependencies (e.g., Chart.js)
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
-
+script(src="/js/adminReg.js") 
 

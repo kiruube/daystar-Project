@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const AccountsSchema = new mongoose.Schema({
+const financeSchema = new mongoose.Schema({
    recordType: {
     type: String,
     enum: ["Expense", "Income"]
@@ -23,5 +23,5 @@ const AccountsSchema = new mongoose.Schema({
   }
 });
 
-const Accounts = mongoose.model("Accounts", AccountsSchema);
-module.exports = Accounts;
+module.exports = mongoose.model("Finance", financeSchema);
+

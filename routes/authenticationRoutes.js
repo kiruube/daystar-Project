@@ -1,7 +1,6 @@
 const express = require("express");
 const router =express.Router();
 const passport = require("passport");
-const crypto = require("crypto");
 
 //get route for login
 router.get("/login", (req, res) =>{
@@ -26,10 +25,7 @@ router.get("/logout", (req, res) =>{
    }
 });
 
-//dasboard route
-router.get("/dashboard", (req, res) =>{
-   res.render("dashboard");
- });
+
 
  //index page route
  router.get("/", (req,res) =>{

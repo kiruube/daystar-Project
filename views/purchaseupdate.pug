@@ -18,7 +18,7 @@ include nav
 include buttonBar
 .container
   h2 Update Purchase
-  form#updateItemForm(action=`/purchase/update/${purchase._id}` method='POST')
+  form#updateItemForm(action=`/purchase/update/${purchase._id}` method='POST' enctype='multipart/form-data' onsubmit='return validation(event)' name='validationForm')
     .form-group
       label(for='itemName') Item Name:
       input#itemName.form-control(type='text' name='itemName' value=purchase.itemName)
@@ -53,10 +53,11 @@ include buttonBar
       #supplierError.error-message
     .form-group
       label(for='itemImage') Item Image:
-      input#itemImage.form-control-file(type='file' accept='image/*' name='itemImage' value=purchase.itemImage)
+      input#itemImage.form-control-file(type='file' name='itemImage' value=purchase.itemImage)
       #itemImageError.error-message
     .form-group
     button.btn.btn-primary(type='submit') Update
 br
 include footer
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+script(src="/js/purch.js") 

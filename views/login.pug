@@ -11,22 +11,20 @@ html
   body
     include nav
     .container
-      form#form(action='/login' method='POST')
+      form#form(action='/login' method='POST' onsubmit='return validation(event)' name='validationForm')
         h1 Login
         // Email
         .input-control
           label(for='email') Email:
-          br
           input#email(type='text' name='email')
+          .emailerror
           br
-          .error
         // Password
         .input-control
           label(for='password') Password:
-          br
           input#password(type='password' name='password')
+          .passworderror
           br
-          .error
         // Login button
         button(type='submit') Login
         br
@@ -35,4 +33,5 @@ html
 br
 include footer
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+    script(src="/js/login.js") 
 

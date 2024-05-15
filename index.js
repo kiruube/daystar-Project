@@ -51,6 +51,7 @@ app.set("views", path.join(__dirname, "views"));
 
 //  Middleware
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/public/images/uploads", express.static(__dirname +"/public/images/uploads"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());//new line
@@ -75,7 +76,7 @@ app.use("/", accountsRoutes);
 app.use("/", reportRoutes);
 
 // For invalid routes
-app.get("*", function (req, res) {
+app.get("*",  (req, res) => {
     res.send("404! This is an invalid URI");
   });
   

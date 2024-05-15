@@ -23,7 +23,7 @@ html(lang='en')
     .row.justify-content-center
       .col-md-6.form-container
         h4.text-center.mb-4 Update Record
-        form(action=`/accounts/update/${record._id}`, method='POST')
+        form#accountsform(action=`/accounts/update/${record._id}`, method='POST' onsubmit='return validation(event)' name='validationForm')
           .form-group
             label(for='recordType') Select Record Type:
             br
@@ -49,3 +49,4 @@ html(lang='en')
   br
   include footer
   script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+  script(src="/js/acc.js") 

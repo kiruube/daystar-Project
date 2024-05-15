@@ -1,134 +1,160 @@
-// Form validation
-const form = document.getElementById("sitterRegistrationForm");
+const validation = (event) => {
+  let error = 0;
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-  if (validateForm()) {
-    // Form submission logic
-    alert("Registered successfully!");
-    form.reset();
-  }
-});
-
-function validateForm() {
-  let isValid = true;
-
-  // Reset error messages
-  const errorMessages = document.querySelectorAll(".error-message");
-  errorMessages.forEach(function (errorMessage) {
-    errorMessage.textContent = "";
-  });
-
-  // Admin's Information validation
-  const fullName = form.elements["fullName"].value.trim();
-  if (fullName === "") {
-    document.getElementById("fullNameError").textContent =
-      "Full name is required";
-    isValid = false;
+  // Full Name validation
+  const fullName = document.getElementById('fullName');
+  const fullNameError = document.getElementById('fullNameError');
+  if (fullName.value.trim() === '') {
+      fullName.style.border = '1px solid red';
+      fullNameError.textContent = 'Full Name is required!';
+      fullNameError.style.color = 'red';
+      error++;
+  } else {
+      fullName.style.border = '1px solid green';
+      fullNameError.textContent = '';
   }
 
-  const gender = form.elements["gender"].value;
-  if (gender === "") {
-    document.getElementById("genderError").textContent = "Gender is required";
-    isValid = false;
+  // Gender validation
+  const gender = document.getElementById('gender');
+  const genderError = document.getElementById('genderError');
+  if (gender.value === '') {
+      gender.style.border = '1px solid red';
+      genderError.textContent = 'Please select Gender!';
+      genderError.style.color = 'red';
+      error++;
+  } else {
+      gender.style.border = '1px solid green';
+      genderError.textContent = '';
   }
 
-  const dateOfBirth = form.elements["dateOfBirth"].value.trim();
-  if (dateOfBirth === "") {
-    document.getElementById("dateOfBirthError").textContent =
-      "Date of birth is required";
-    isValid = false;
+  // Date of Birth validation
+  const dateOfBirth = document.getElementById('dateOfBirth');
+  const dateOfBirthError = document.getElementById('dateOfBirthError');
+  if (dateOfBirth.value.trim() === '') {
+      dateOfBirth.style.border = '1px solid red';
+      dateOfBirthError.textContent = 'Date of Birth is required!';
+      dateOfBirthError.style.color = 'red';
+      error++;
+  } else {
+      dateOfBirth.style.border = '1px solid green';
+      dateOfBirthError.textContent = '';
   }
 
-  const religion = form.elements["religion"].value.trim();
-  if (religion === "") {
-    document.getElementById("religionError").textContent =
-      "Religion is required";
-    isValid = false;
+  // Religion validation
+  const religion = document.getElementById('religion');
+  const religionError = document.getElementById('religionError');
+  if (religion.value.trim() === '') {
+      religion.style.border = '1px solid red';
+      religionError.textContent = 'Religion is required!';
+      religionError.style.color = 'red';
+      error++;
+  } else {
+      religion.style.border = '1px solid green';
+      religionError.textContent = '';
   }
 
-  const phone = form.elements["phone"].value.trim();
-  if (phone === "") {
-    document.getElementById("phoneError").textContent =
-      "Telephone Number is required";
-    isValid = false;
+  // Location validation
+  const location = document.getElementById('location');
+  const locationError = document.getElementById('locationError');
+  if (location.value.trim() === '') {
+      location.style.border = '1px solid red';
+      locationError.textContent = 'Location is required!';
+      locationError.style.color = 'red';
+      error++;
+  } else {
+      location.style.border = '1px solid green';
+      locationError.textContent = '';
   }
 
-  const email = form.elements["email"].value.trim();
-  if (email === "") {
-    document.getElementById("emailError").textContent = "Email is required";
-    isValid = false;
+  // Telephone Number validation
+  const phone = document.getElementById('phone');
+  const phoneError = document.getElementById('phoneError');
+  const phoneRegex = /^\d{10}$/; // Regex for ten digits
+
+  if (!phoneRegex.test(phone.value.trim())) {
+      phone.style.border = '1px solid red';
+      phoneError.textContent = 'Please enter a valid ten-digit phone number!';
+      phoneError.style.color = 'red';
+      error++;
+  } else {
+      phone.style.border = '1px solid green';
+      phoneError.textContent = '';
   }
 
-  const location = form.elements["location"].value.trim();
-  if (location === "") {
-    document.getElementById("locationError").textContent =
-      "location is required";
-    isValid = false;
+  // Email validation
+  const email = document.getElementById('email');
+  const emailError = document.getElementById('emailError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for email format
+
+  if (!emailRegex.test(email.value.trim())) {
+      email.style.border = '1px solid red';
+      emailError.textContent = 'Please enter a valid email address!';
+      emailError.style.color = 'red';
+      error++;
+  } else {
+      email.style.border = '1px solid green';
+      emailError.textContent = '';
   }
 
-  const nationality = form.elements["nationality"].value.trim();
-  if (nationality === "") {
-    document.getElementById("nationalityError").textContent =
-      "Nationality is required";
-    isValid = false;
+  // Nationality validation
+  const nationality = document.getElementById('nationality');
+  const nationalityError = document.getElementById('nationalityError');
+  if (nationality.value.trim() === '') {
+      nationality.style.border = '1px solid red';
+      nationalityError.textContent = 'Nationality is required!';
+      nationalityError.style.color = 'red';
+      error++;
+  } else {
+      nationality.style.border = '1px solid green';
+      nationalityError.textContent = '';
   }
 
-  const nok = form.elements["nok"].value.trim();
-  if (nok === "") {
-    document.getElementById("nokError").textContent =
-      "Next of Kin is required";
-    isValid = false;
+  // National ID Number (NIN) validation
+  const nin = document.getElementById('nin');
+  const ninError = document.getElementById('ninError');
+  if (nin.value.trim() === '') {
+      nin.style.border = '1px solid red';
+      ninError.textContent = 'National ID Number (NIN) is required!';
+      ninError.style.color = 'red';
+      error++;
+  } else {
+      nin.style.border = '1px solid green';
+      ninError.textContent = '';
   }
 
-  const recommendersName = form.elements["recommendersName"].value.trim();
-  if (recommendersName === "") {
-    document.getElementById("recommendersNameError").textContent =
-      "Recommender's name is required";
-    isValid = false;
+  // Role validation
+  const role = document.getElementById('role');
+  const roleError = document.getElementById('roleError');
+  if (role.value.trim() === '') {
+      role.style.border = '1px solid red';
+      roleError.textContent = 'Role is required!';
+      roleError.style.color = 'red';
+      error++;
+  } else {
+      role.style.border = '1px solid green';
+      roleError.textContent = '';
   }
 
-  const nin = form.elements["nin"].value.trim();
-  if (nin === "") {
-    document.getElementById("ninError").textContent =
-      "National ID Number is required";
-    isValid = false;
+  // Password validation
+  const password = document.getElementById('password');
+  const passwordError = document.getElementById('passwordError');
+  if (password.value.trim() === '') {
+      password.style.border = '1px solid red';
+      passwordError.textContent = 'Password is required!';
+      passwordError.style.color = 'red';
+      error++;
+  } else if (password.value.length < 8) {
+      password.style.border = '1px solid red';
+      passwordError.textContent = 'Password must be at least 8 characters!';
+      passwordError.style.color = 'red';
+      error++;
+  } else {
+      password.style.border = '1px solid green';
+      passwordError.textContent = '';
   }
 
-  const education = form.elements["education"].value.trim();
-  if (education === "") {
-    document.getElementById("educationError").textContent =
-      "Level of Education is required";
-    isValid = false;
+  // If any errors, prevent form submission
+  if (error > 0) {
+      event.preventDefault();
   }
-
-  const staffNumber = form.elements["staffNumber"].value.trim();
-  if (staffNumber === "") {
-    document.getElementById("staffNumberError").textContent =
-      "Staff Number is required";
-    isValid = false;
-  }
-
-  const kabalagaResident = form.elements["kabalagaResident"].value.trim();
-  if (kabalagaResident === "") {
-    document.getElementById("kabalagaResidentError").checkboxContent =
-      "Confirmation of location is required";
-    isValid = false;
-  }
-
-  const userName = form.elements["userName"].value.trim();
-  if (userName === "") {
-    document.getElementById("userNameError").textContent =
-      "Username is required";
-    isValid = false;
-  }
-
-  const password = form.elements["password"].value.trim();
-  if (password === "") {
-    document.getElementById("passwordError").textContent =
-      "Password is required";
-    isValid = false;
-  }
-
-  return isValid;
-}
+};

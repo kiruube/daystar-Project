@@ -28,7 +28,7 @@ include buttonBar
       .card
         .card-header Babies Registration Form
         .card-body
-          form#babyRegistrationForm(action='/babyUpdate?id='+baby._id  method='POST')
+          form#babyRegistrationForm(action='/babyUpdate?id='+baby._id  method='POST'  onsubmit='return validation(event)' name='validationForm')
             // Child's Information
             h5 Child&apos;s Information
             .form-group
@@ -106,12 +106,6 @@ include buttonBar
             // Other Information
             h5 Other Information
             .form-group
-              label(for='photo')
-                | Upload current Passport photos size of the (two)Baby,
-                | (two)person responsible
-              input#photo.form-control-file(type='file' accept='image/jpeg, image/png' name='passportImage' value=baby.passportImage)
-              #photoError.error-message
-            .form-group
               label(for='location') Location
               input#location.form-control(type='text' name='location' value= baby.location)
               #locationError.error-message
@@ -180,4 +174,5 @@ br
 include footer
 // Bootstrap JS and dependencies (e.g., Chart.js)
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+script(src="/js/babyreg.js")
 

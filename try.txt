@@ -1,320 +1,286 @@
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images/uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-var upload = multer({ storage: storage });
+const validation = (event) => {
+    function validateForm() {
+        let error = 0;
 
+        // Reset error messages
+        const errorMessages = document.querySelectorAll(".error-message");
+        errorMessages.forEach(function (errorMessage) {
+            errorMessage.textContent = "";
+        });
 
+        // Child's Information
+        const childName = document.getElementById('childName');
+        const childNameError = document.getElementById('childNameError');
+        if (childName.value.trim() === '') {
+            setError(childName, childNameError, 'Child\'s Name is required!');
+            error++;
+        } else {
+            setSuccess(childName, childNameError);
+        }
 
-
-//fetching list all babies clocked in from database 
- router.get("/babyClockIn", async (req, res)=> {
-   try {
-     let babies = await BabiesRegisterModel.find({status: "ClockedIn"})
-     res.render("./babies/renderBabyClockIn", {babies:babies}) // to display babies from data base
-     console.log("display babies clocked in", babies);
-
-   } catch (error) {
-      res.status(400).send("unable to find babies from database!");
-      console.log("unable to find babies from database!...", error );
-   }
-   })
-
-
-   //clockin baby route for form in database
- router.get("/babyClockIn/:id", async(req, res)=> { 
-   try{
-      const sitters  = await SittersModel.find()
-     const babyClockIn = await BabiesRegisterModel.findOne({_id: req.params.id});
-     res.render("./babies/babyClockIn", {
-      baby:babyClockIn,
-      sitters:sitters
-   });
-
-   } catch(error){
-      console.log("error finding a baby!", error);
-      res.status(400).send("unable to find baby from the db!");  
-   }
- })
-
- router.post("/babyClockIn", async(req, res)=> {
-   try {
-      await BabiesRegisterModel.findOneAndUpdate({_id: req.query.id}, req.body);
-      res.redirect("/babyClockIn");
-
-   } catch (error) {
-      res.status(404).send("unable to update baby in the db!");  
-   }
- })
-
-
-
- .container
-          h1 child Clocking In
-          form#registrationForm(action= '/babyClockIn?id='+baby._id  method='POST')
-             .form-group
-              label(for='name') Name:
-              input#name(type='text' name='name' value= baby.name readonly)    
-             .form-group
-              label(for='sitter') Sitter:
-              select#sitter.form-control(name='sitter')
-                 if sitters.length
-                 each sitter in sitters
-                     option(value=sitter_id) #{sitter.name}
-              small#sitterErr
-              .form-group
-                 label(for='childBroughtBy') Child Brought by:
-                 input#childBroughtBy(type='text' name='childBroughtBy' value= baby.childBroughtBy)
-               .form-group
-                 label(for='arrivalTime') Arrival Time:
-                 input#arrivalTime(type='time' name='arrivalTime' value= baby.arrivalTime)
-               .form-group
-                 label(for='paidFee')  Paid Fee(UGX):
-                 input#paidFee(type='text' name='paidFee' value= baby.paidFee)
-               .form-group
-                 input#status(type='hidden' name='status'  value= 'ClockedIn')
-               .form-group
-                 label(for='childNumber') Child Number:
-                 input#childNumber(type='text' name='childNumber' value= baby.childNumber)
-                 input.text-bg-success(type='submit' value='Clock-In')
-
-
-
-
-
-
-
-                 .container
-          h1 Children Clock Out
-          form#registrationForm(action= '/ClockingOut?id='+baby._id  method='POST')
-            .form-group
-              label(for='name')  Name:
-              input#name(type='text' name='name' value=baby.name readonly )
-            .form-group
-              label(for='sitter') Sitter:
-              select#sitter.form-control(name='sitter')
-                 if sitters.length
-                 each sitter in sitters
-                     option(value=sitter_id) #{sitter.name}
-              small#sitterErr
-              .form-group
-              label(for='paidFee')  Paid Fee(UGX):
-              input#paidFee(type='text' name='paidFee'  value=baby.paidFee)
-            .form-group
-              label(for='comment')  Comment:
-              input#comment(type='text' name='comment'  value=baby.comment)
-            .form-group
-              label(for='status') Status:
-              input#status(type='text' name='status'  value=baby.status)
-            .form-group
-              label(for='childPickedBy') Child Picked by:
-              input#childPickedBy(type='text' name='childPickedBy'  value=baby.childPickedBy)
-            .form-group
-              label(for='departureTime') Departure Time:
-              input#departureTime(type='time' name='departureTime'  value=baby.departureTime)
-            .form-group
-              label(for='childNumber') Child Number:
-              input#childNumber(type='text' name='childNumber'  value=baby.childNumber)
-            input.text-bg-success(type='submit' value='Clock-Out')
-
-
-
-
-
-
-
-            //fetching list babies clocked Out from database 
- router.get("/clockingOutList", async (req, res)=> {
-   try {
-     let babies = await BabiesRegisterModel.find({status: "ClockedOut"})
-     res.render("./babies/renderBabyClockOut", {babies:babies}) // to display babies from data base
-     console.log("display babies clocked out", babies);
-
-   } catch (error) {
-      res.status(400).send("unable to find babies from database!");
-      console.log("unable to find babies from database!...", error );
-   }
-   })
-   //clockOut baby route for form in database
-  router.get("/ClockingOut/:id", async(req, res)=> { 
-   try{  
-    const sitters  = await SittersModel.find()
-     const babyClockOut = await BabiesRegisterModel.findOne({_id: req.params.id});
-     res.render("./babies/babyClockOut", {
-      baby:babyClockOut,
-        sitters:sitters
-   });
-   } catch(error){
-      console.log("error finding a baby!", error);
-      res.status(400).send("unable to find baby from the db!");  
-   }
- })
-
- router.post("/ClockingOut", async(req, res)=> {
-   try {
-      await BabiesRegisterModel.findOneAndUpdate({_id: req.query.id}, req.body);
-      res.redirect("/clockingOutList");
-
-   } catch (error) {
-      res.status(404).send("unable to update baby in the db!");  
-   }
- })
-
-
-
-
-
-
-
-
-
-
-
- i need get and post routes that picks data of checked in babies in a database collection named "babycheckinouts " and this update form "doctype html
-html(lang='en')
-  head
-    meta(charset='UTF-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title Update Baby Checked-In 
-    link(href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
-    link(rel='stylesheet' href='/css/style.css')
-  body
-    include nav
-    include attend
-    .container.mt-4.mb-4.bg-white.p-4.border(style='color: black;')
-      h2.mb-4 Check In Baby
-      form#checkinForm(action='' method='POST')
-        .form-group
-          label(for='babyName') Baby Name
-          select#babyName.form-control(name='babyName')
-            option(value='') Select Baby's Name
-            each baby in babies
-              option(value=baby_id) #{baby.childName}
-
-        .form-group
-          label(for='personBrought') Person Who Brought
-          input#personBrought.form-control(type='text' name='personBrought' value=personBrought  placeholder='Enter name of person who brought the baby')
-
-        .form-group
-          label(for='contactBrought') Contact for Person Who Brought
-          input#contactBrought.form-control(type='text' name='contactBrought' value=contactBrought placeholder='Enter contact number or email')
-
-        .form-group
-          label Period of Stay
-          br
-          .form-check.form-check-inline
-            input#fullDay.form-check-input(type='radio' name='periodOfStay' value='Full Day(UGX 15,000)' checked=periodOfStay ==='Full Day(UGX 15,000)')
-            label.form-check-label(for='fullDay') Full Day (UGX 15,000)
-          .form-check.form-check-inline
-            input#halfDay.form-check-input(type='radio' name='periodOfStay' value='Half Day(UGX 10,000)' checked=periodOfStay ==='Half Day(UGX 10,000)')
-            label.form-check-label(for='halfDay') Half Day (UGX 10,000)
-          .form-group
-            label(for='sitter') Assign Sitter
-            select#sitter.form-control(name='sitter')
-              option(value='') Select Sitter
-              each sitter in availableSitters
-                option(value=sitter._id) #{sitter.fullName}
-        button.btn.btn-success(type='submit') Update
-
-include footer
-script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
-" saved in a file named checkinupdate, the data on the table of the is of babies checked in saved in a file named "checkedin" is updated
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const express = require('express');
-const router = express.Router();
-
-//Import model
-const Accounts = require('../models/accounts');
-
-// Render Accounts form
-router.get("/accounts", (req, res) => {
-    res.render("accounts"); // Assuming you have a view named "accounts"
-});
-
-// post route 
-//installing the async function
-router.post("/accounts", async (req, res) => {
-  try {
-    const records = new Accounts(req.body);
-    console.log(records);
-    await records.save();
-    res.redirect("/accounts");
-  } catch (error) {
-    res.status(400).send("Sorry! Something wrong happened");
-    console.log("Error registering record.", error);
+         // Father's Name validation
+  const fatherName = document.getElementById('fatherName');
+  const fatherNameError = document.getElementById('fatherNameError');
+  if (fatherName.value.trim() === '') {
+      fatherName.style.border = '1px solid red';
+      fatherNameError.textContent = 'Father\'s Name is required!';
+      fatherNameError.style.color = 'red';
+      error++;
+  } else {
+      fatherName.style.border = '1px solid green';
+      fatherNameError.textContent = '';
   }
-});
 
-// Route to fetch all accounts records
-router.get('/accrecords', async (req, res) => {
-  try {
-    const records = await Accounts.find();
-    res.render('accountslist', {records: records});
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  // Father's Telephone Number validation
+  const fatherPhone = document.getElementById('fatherPhone');
+  const fatherPhoneError = document.getElementById('fatherPhoneError');
+  const phoneRegex = /^\d{10}$/; // Regex for ten digits
+
+  if (!phoneRegex.test(fatherPhone.value.trim())) {
+      fatherPhone.style.border = '1px solid red';
+      fatherPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
+      fatherPhoneError.style.color = 'red';
+      error++;
+  } else {
+      fatherPhone.style.border = '1px solid green';
+      fatherPhoneError.textContent = '';
   }
-});
 
-// Route to update an existing accounts record
-router.get("/accountsupdate/:id", async (req, res) => {
-  try {
-      const recordupdate = await Accounts.findOne({ _id: req.params.id });
-      console.log("Record Type:", recordupdate.recordType);
-      res.render("accountsupdate", { record: recordupdate });
-  } catch (error) {
-      console.error("Error finding record:", error);
-      res.status(500).json({ message: "Internal Server Error" });
+  // Father's Email validation
+  const fatherEmail = document.getElementById('fatherEmail');
+  const fatherEmailError = document.getElementById('fatherEmailError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for email format
+
+  if (!emailRegex.test(fatherEmail.value.trim())) {
+      fatherEmail.style.border = '1px solid red';
+      fatherEmailError.textContent = 'Please enter a valid email address!';
+      fatherEmailError.style.color = 'red';
+      error++;
+  } else {
+      fatherEmail.style.border = '1px solid green';
+      fatherEmailError.textContent = '';
   }
-});
 
-// Route to handle submission of the update form
-router.post('/accountsupdate', async (req, res) => {
-  try {
-    const { id, ...updateFields } = req.body;
+  // Father's Nationality validation
+  const fatherNationality = document.getElementById('fatherNationality');
+  const fatherNationalityError = document.getElementById('fatherNationalityError');
+  if (fatherNationality.value.trim() === '') {
+      fatherNationality.style.border = '1px solid red';
+      fatherNationalityError.textContent = 'Father\'s Nationality is required!';
+      fatherNationalityError.style.color = 'red';
+      error++;
+  } else {
+      fatherNationality.style.border = '1px solid green';
+      fatherNationalityError.textContent = '';
+  }
 
-    const updatedRecord = await Accounts.findOneAndUpdate(
-      { _id: id },
-      updateFields,
-      { new: true }
-    );
+  // Mother's Name validation
+  const motherName = document.getElementById('motherName');
+  const motherNameError = document.getElementById('motherNameError');
+  if (motherName.value.trim() === '') {
+      motherName.style.border = '1px solid red';
+      motherNameError.textContent = 'Mother\'s Name is required!';
+      motherNameError.style.color = 'red';
+      error++;
+  } else {
+      motherName.style.border = '1px solid green';
+      motherNameError.textContent = '';
+  }
 
-    if (!updatedRecord) {
-      return res.status(404).json({ message: "Record not found" });
+  // Mother's Telephone Number validation
+  const motherPhone = document.getElementById('motherPhone');
+  const motherPhoneError = document.getElementById('motherPhoneError');
+  if (!phoneRegex.test(motherPhone.value.trim())) {
+      motherPhone.style.border = '1px solid red';
+      motherPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
+      motherPhoneError.style.color = 'red';
+      error++;
+  } else {
+      motherPhone.style.border = '1px solid green';
+      motherPhoneError.textContent = '';
+  }
+
+  // Mother's Email validation
+  const motherEmail = document.getElementById('motherEmail');
+  const motherEmailError = document.getElementById('motherEmailError');
+  if (!emailRegex.test(motherEmail.value.trim())) {
+      motherEmail.style.border = '1px solid red';
+      motherEmailError.textContent = 'Please enter a valid email address!';
+      motherEmailError.style.color = 'red';
+      error++;
+  } else {
+      motherEmail.style.border = '1px solid green';
+      motherEmailError.textContent = '';
+  }
+
+  // Mother's Nationality validation
+  const motherNationality = document.getElementById('motherNationality');
+  const motherNationalityError = document.getElementById('motherNationalityError');
+  if (motherNationality.value.trim() === '') {
+      motherNationality.style.border = '1px solid red';
+      motherNationalityError.textContent = 'Mother\'s Nationality is required!';
+      motherNationalityError.style.color = 'red';
+      error++;
+  } else {
+      motherNationality.style.border = '1px solid green';
+      motherNationalityError.textContent = '';
+  }
+
+  // Father's Occupation validation
+  const fatherOccupation = document.getElementById('fatherOccupation');
+  const fatherOccupationError = document.getElementById('fatherOccupationError');
+  if (fatherOccupation.value.trim() === '') {
+      fatherOccupation.style.border = '1px solid red';
+      fatherOccupationError.textContent = 'Father\'s Occupation is required!';
+      fatherOccupationError.style.color = 'red';
+      error++;
+  } else {
+      fatherOccupation.style.border = '1px solid green';
+      fatherOccupationError.textContent = '';
+  }
+
+// Medical Background validation
+const medicalBackground = document.getElementById('medicalBackground');
+const medicalBackgroundError = document.getElementById('medicalBackgroundError');
+if (medicalBackground.value.trim() === '') {
+    medicalBackground.style.border = '1px solid red';
+    medicalBackgroundError.textContent = 'Medical Background is required!';
+    medicalBackgroundError.style.color = 'red';
+    error++;
+} else {
+    medicalBackground.style.border = '1px solid green';
+    medicalBackgroundError.textContent = '';
+}
+
+// Doctor's Name validation
+const doctor = document.getElementById('doctor');
+const doctorError = document.getElementById('doctorError');
+if (doctor.value.trim() === '') {
+    doctor.style.border = '1px solid red';
+    doctorError.textContent = 'Doctor\'s Name is required!';
+    doctorError.style.color = 'red';
+    error++;
+} else {
+    doctor.style.border = '1px solid green';
+    doctorError.textContent = '';
+}
+
+// Doctor's Telephone Number validation
+const doctorPhone = document.getElementById('doctorPhone');
+const doctorPhoneError = document.getElementById('doctorPhoneError');
+if (!phoneRegex.test(doctorPhone.value.trim())) {
+    doctorPhone.style.border = '1px solid red';
+    doctorPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
+    doctorPhoneError.style.color = 'red';
+    error++;
+} else {
+    doctorPhone.style.border = '1px solid green';
+    doctorPhoneError.textContent = '';
+}
+
+// Doctor's Email validation
+const doctorEmail = document.getElementById('doctorEmail');
+const doctorEmailError = document.getElementById('doctorEmailError');
+if (!emailRegex.test(doctorEmail.value.trim())) {
+    doctorEmail.style.border = '1px solid red';
+    doctorEmailError.textContent = 'Please enter a valid email address!';
+    doctorEmailError.style.color = 'red';
+    error++;
+} else {
+    doctorEmail.style.border = '1px solid green';
+    doctorEmailError.textContent = '';
+}
+
+// Hospital validation
+const hospital = document.getElementById('hospital');
+const hospitalError = document.getElementById('hospitalError');
+if (hospital.value.trim() === '') {
+    hospital.style.border = '1px solid red';
+    hospitalError.textContent = 'Hospital is required!';
+    hospitalError.style.color = 'red';
+    error++;
+} else {
+    hospital.style.border = '1px solid green';
+    hospitalError.textContent = '';
+}
+
+// Baby Number validation
+const babyNumber = document.getElementById('babyNumber');
+const babyNumberError = document.getElementById('babyNumberError');
+if (babyNumber.value.trim() === '') {
+    babyNumber.style.border = '1px solid red';
+    babyNumberError.textContent = 'Baby Number is required!';
+    babyNumberError.style.color = 'red';
+    error++;
+} else {
+    babyNumber.style.border = '1px solid green';
+    babyNumberError.textContent = '';
+}
+
+        // Orphan validation
+        const isOrphanYes = document.getElementById('isOrphanYes');
+        const isOrphanNo = document.getElementById('isOrphanNo');
+        const orphanError = document.getElementById('orphanError');
+        const guardianDetails = document.getElementById('guardianDetails');
+
+        if (!isOrphanYes.checked && !isOrphanNo.checked) {
+            orphanError.textContent = 'Please select if the child is an orphan!';
+            orphanError.style.color = 'red';
+            error++;
+        } else {
+            orphanError.textContent = '';
+            if (isOrphanYes.checked) {
+                // If the child is marked as an orphan, guardian details are required
+                const guardianName = document.getElementById('guardianName');
+                const guardianPhone = document.getElementById('guardianPhone');
+                const guardianEmail = document.getElementById('guardianEmail');
+                const relationshipStatus = document.getElementById('relationshipStatus');
+
+                if (guardianName.value.trim() === '') {
+                    setError(guardianName, guardianNameError, 'Guardian\'s Name is required!');
+                    error++;
+                } else {
+                    setSuccess(guardianName, guardianNameError);
+                }
+
+                if (!phoneRegex.test(guardianPhone.value.trim())) {
+                    setError(guardianPhone, guardianPhoneError, 'Please enter a valid ten-digit phone number!');
+                    error++;
+                } else {
+                    setSuccess(guardianPhone, guardianPhoneError);
+                }
+
+                if (!emailRegex.test(guardianEmail.value.trim())) {
+                    setError(guardianEmail, guardianEmailError, 'Please enter a valid email address!');
+                    error++;
+                } else {
+                    setSuccess(guardianEmail, guardianEmailError);
+                }
+
+                if (relationshipStatus.value.trim() === '') {
+                    setError(relationshipStatus, relationshipStatusError, 'Relationship Status is required!');
+                    error++;
+                } else {
+                    setSuccess(relationshipStatus, relationshipStatusError);
+                }
+            }
+        }
+
+        return error === 0;
     }
 
-    res.redirect("/accrecords");
-  } catch (err) {
-    console.error("Error updating record:", err);
-    res.status(500).json({ message: "Error updating Record.." });
-  }
-});
+    function setError(input, errorElement, errorMessage) {
+        input.style.border = '1px solid red';
+        errorElement.textContent = errorMessage;
+        errorElement.style.color = 'red';
+    }
 
+    function setSuccess(input, errorElement) {
+        input.style.border = '1px solid green';
+        errorElement.textContent = '';
+    }
 
-// Route to delete an existing accounts record
-router.post('/accountdelete', async (req, res) => {
-  try {
-    await Accounts.deleteOne({_id: req.body.id});
-    res.redirect("/accrecords"); // Redirect to the appropriate route after deletion
-  } catch (err) {
-    res.status(400).json({ message: "Unable to delete record.." });
-  }
-});
-
-module.exports = router;
+    if (!validateForm()) {
+        event.preventDefault();
+    }
+};

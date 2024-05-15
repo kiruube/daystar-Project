@@ -57,10 +57,6 @@ const babyregistrationSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  passportImage: {
-    type: String,
-    trim: true,
-  },
   location: {
     type: String,
     trim: true,

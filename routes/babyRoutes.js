@@ -41,6 +41,7 @@ router.get("/babyList", async (req, res) => {
 
 //Deleting a baby in the database
 router.post("/delete", async (req, res) => {
+  if (req.session.user) {
   try {
     await RegisterBaby.deleteOne({ _id: req.body.id });
     res.redirect("back");
@@ -48,11 +49,15 @@ router.post("/delete", async (req, res) => {
     res.status(400).send("Unable to delete baby!");
     console.log("Error deleting  baby...", error);
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 //updating a baby in the database
 // Route to fetch the update form for a specific baby
 router.get("/babyUpdate/:id", async (req, res) => {
+  if (req.session.user) {
   try {
     const babyUpdate = await RegisterBaby.findOne({ _id: req.params.id });
     res.render("babyUpdate", { baby: babyUpdate });
@@ -60,6 +65,9 @@ router.get("/babyUpdate/:id", async (req, res) => {
     console.error("Error finding baby", error);
     res.status(400).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 router.post("/babyUpdate", async (req, res) => {
@@ -76,6 +84,7 @@ router.post("/babyUpdate", async (req, res) => {
  
 // Route to render the check-in form
 router.get("/checkin", async (req, res) => {
+  if (req.session.user) {
   try {
     // Fetch available sitters from the database
     const availableSitters = await StaffRegistration.find({ role: "Sitter" }).select('fullName');
@@ -88,6 +97,9 @@ router.get("/checkin", async (req, res) => {
     console.error("Error rendering check-in form:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 // Route to handle check-in form submission
@@ -123,6 +135,7 @@ router.get("/checked", async (req, res) => {
 });
 
 router.get("/checkinupdate/:id", async (req, res) => {
+  if (req.session.user) {
   try {
     // Find the checked-in baby record by ID
     const babyCheckInOut = await BabyCheckInOut.findById(req.params.id);
@@ -143,6 +156,9 @@ router.get("/checkinupdate/:id", async (req, res) => {
     console.error("Error rendering check-in update form:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 router.post("/checkinupdate/:id", async (req, res) => {
@@ -171,6 +187,7 @@ router.post("/checkinupdate/:id", async (req, res) => {
 
 // Route to delete a checked-in baby
 router.post("/checkedin/:id", async (req, res) => {
+  if (req.session.user) {
   try {
     if (req.body._method === 'DELETE') {
       const babyId = req.params.id;
@@ -187,9 +204,13 @@ router.post("/checkedin/:id", async (req, res) => {
     console.error("Error deleting checked-in baby:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 router.get("/checkout/:id", async (req, res) => {
+  if (req.session.user) {
   try {
     console.log("Rendering checkout form for a specific baby...");
     // Find the baby by ID
@@ -207,6 +228,9 @@ router.get("/checkout/:id", async (req, res) => {
     console.error("Error rendering checkout form:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 // Route to handle checkout form submission
@@ -229,6 +253,7 @@ router.post("/checkout/:id", async (req, res) => {
 
 // Route to display a list of checked-out babies
 router.get("/checkedout", async (req, res) => {
+  if (req.session.user) {
   try {
     console.log("Fetching list of checked-out babies...");
     // Fetch list of checked-out babies from the database
@@ -241,9 +266,13 @@ router.get("/checkedout", async (req, res) => {
     console.error("Error fetching checked-out babies:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 router.get("/checkoutupdate/:id", async (req, res) => {
+  if (req.session.user) {
   try {
     const babyId = req.params.id;
     // Fetch the checked-out baby's information from the database
@@ -261,6 +290,9 @@ router.get("/checkoutupdate/:id", async (req, res) => {
     console.error("Error fetching checked-out baby details:", error);
     res.status(500).send("Internal Server Error");
   }
+} else {
+  res.redirect("/login");
+}
 });
 
 router.post("/checkoutupdate/:id", async (req, res) => {

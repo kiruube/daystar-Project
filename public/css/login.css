@@ -37,16 +37,6 @@
     .input-control input:focus {
     outline: 0;
     }
-    .input-control.success input {
-    border-color: #89c372;
-    }
-    .input-control.error input {
-    border-color: #ff3860;
-    }
-    .input-control.error {
-    color: #ff3860;
-    font-size: 14px;
-    }
     footer {
         background-image: linear-gradient(to right top, #2f0e53, #2c175a, #281f61, #242668, #1e2d6e, #153776, #09417c, #004b82, #005a86, #006784, #00727e, #1c7c76);
         padding: 20px 0;

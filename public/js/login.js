@@ -1,55 +1,45 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("form");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-  
-    const setError = (element, message) => {
-      const inputControl = element.parentElement;
-      const errorDisplay = inputControl.querySelector(".error");
-      errorDisplay.innerText = message;
-      inputControl.classList.add("error");
-      inputControl.classList.remove("success");
-    };
-  
-    const setSuccess = (element) => {
-      const inputControl = element.parentElement;
-      const errorDisplay = inputControl.querySelector(".error");
-      errorDisplay.innerText = ""; // Clear error message
-      inputControl.classList.add("success");
-      inputControl.classList.remove("error");
-    };
-  
-    const validateInput = () => {
-      const emailValue = email.value.trim();
-      const passwordValue = password.value.trim();
-  
-      // Email validation
-      if (!emailValue) {
-        setError(email, "Email is required");
-      } else if (!isValidEmail(emailValue)) {
-        setError(email, "Provide a valid email address");
+const validation = (event) => {
+  let error = 0;
+
+  // Email validation
+  const email = document.getElementById('email');
+  const emailError = document.querySelector('.emailerror');
+
+  if (email.value.trim() === '') {
+      email.style.border = "1px solid red"
+      emailError.textContent = 'Email is required!';
+      emailError.style = 'color:red;'
+      error++;
+  } else {
+      // Check if email format is valid using a regular expression
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.value.trim())) {
+          emailError.textContent = 'Please enter a valid email address!';
+          emailError.style='color: red;'
+          error++;
       } else {
-        setSuccess(email);
+          emailError.textContent = '';
       }
-  
-      // Password validation
-      if (!passwordValue) {
-        setError(password, "Password is required");
-      } else if (passwordValue.length < 8) {
-        setError(password, "Password should be at least 8 characters");
-      } else {
-        setSuccess(password);
-      }
-    };
-  
-    const isValidEmail = (email) => {
-      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return re.test(email);
-    };
-  
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      validateInput();
-    });
-  });
-  
+  }
+
+  // Password validation
+  const password = document.getElementById('password');
+  const passwordError = document.querySelector('.passworderror');
+
+  if (password.value.trim() === '') {
+      password.style.border = "1px solid red"
+      passwordError.textContent = 'Password is required!';
+      passwordError.style = 'color:red;'
+      error++;
+  } else if (password.value.length < 8) {
+      passwordError.textContent = 'Password must be at least 8 characters!';
+      passwordError.style = 'color: red;'
+      error++;
+  } else {
+      passwordError.textContent = '';
+  }
+
+  if (error > 0) {
+      event.preventDefault();
+  }
+};

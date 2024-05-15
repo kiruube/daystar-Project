@@ -42,7 +42,7 @@ include buttonBar
         each purchase in purchases 
           tr
             td
-               img(src=purchase.itemImage, alt='Item Image', style='max-width: 100px;')
+               img(src=purchase.itemImage, alt='Item Image', style='max-width: 100px; height: 80px;')
             td #{purchase.itemName}
             td #{purchase.dateOfDelivery}
             td #{purchase.itemUnit}
