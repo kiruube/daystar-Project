@@ -32,7 +32,7 @@ head
 include nav 
 include buttonBar 
 .container.mt-5
-  h2.text-center.mb-4 Accounts Record History
+  h4.text-center.mb-4 Accounts Record History
   .row.justify-content-center
     .col-md-8
       table.table.table-bordered
@@ -54,11 +54,12 @@ include buttonBar
                 td #{record.recordDescription}
                 td #{record.recordAmount}
                 td 
-                  a.btn.btn-primary(href=`/accountsupdate/${record._id}`) Update
-                td  
+                  a.btn(href=`/accountsupdate/${record._id}`)
+                    i.fas.fa-edit 
                   form(method="POST" action="/accountdelete" )
                      input(type="hidden" name="id" value=record._id)
-                     button.btn.btn-danger(type="submit") Delete
+                     button.btn(type="submit")
+                      i.fas.fa-trash-alt
 
 br          
 include footer      

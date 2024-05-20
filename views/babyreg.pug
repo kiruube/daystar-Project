@@ -1,184 +1,172 @@
 doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Babies Registration
-  // Bootstrap CSS
-  link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
-  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
-  link(rel='stylesheet' href='/css/style.css')
-  style.
-    #babyRegistrationForm {
-    width: 600px;
-    margin: 2vh auto 0 auto;
-    padding: 20px;
-    background-color: rgb(240, 240, 240);
-    border-radius: 4px;
-    font-size: 13.5px;
-    color: black;
-    }
-    .error-message {
-    color: red;
-    font-size: 0.875rem;
-    }
-    .card-header {
-    color: black;
-    }
-include nav    
-include buttonBar
-#form.container.mt-5
-  .row.justify-content-center
-    .col-md-8
-      .card
-        .card-header Babies Registration Form
-        .card-body
-          form#babyRegistrationForm(action="/register" method="POST" onsubmit='return validation(event)' name='validationForm' )
-            // Child's Information
-            h5 Child&apos;s Information
-            .form-group
-              label(for='childName') Child&apos;s Name
-              input#childName.form-control(type='text' name='childName')
-              #childNameError.error-message
-            .form-group
-              label(for='gender') Gender
-              select#gender.form-control(name='gender')
-                option(value='') Select Gender
-                option(value='male') Male
-                option(value='female') Female
-              #genderError.error-message
-            .form-group
-              label(for='dateOfBirth') Date of Birth
-              input#dateOfBirth.form-control(type='date' name='dateOfBirth')
-              #dateOfBirthError.error-message
-            // Parents' Information
-            h5 Parents&apos; Information
-            .form-group
-              label(for='fatherName') Father&apos;s Name
-              input#fatherName.form-control(type='text' name='fatherName')
-              #fatherNameError.error-message
-            .form-group
-              label(for='fatherPhone') Father&apos;s Telephone Number
-              input#fatherPhone.form-control(type='tel' name='fatherPhone')
-              #fatherPhoneError.error-message
-            .form-group
-              label(for='fatherEmail') Father&apos;s Email
-              input#fatherEmail.form-control(type='email' name='fatherEmail')
-              #fatherEmailError.error-message
-            .form-group
-              label(for='fatherNationality') Father&apos;s Nationality
-              input#fatherNationality.form-control(type='text' name='fatherNationality')
-              #fatherNationalityError.error-message
-            .form-group
-              label(for='fatherOccupation') Father&apos;s Occupation
-              input#fatherOccupation.form-control(type='text' name='fatherOccupation')
-              #fatherOccupationError.error-message
-            .form-group
-              label(for='motherName') Mother&apos;s Name
-              input#motherName.form-control(type='text' name='motherName')
-              #motherNameError.error-message
-            .form-group
-              label(for='motherPhone') Mother&apos;s Telephone Number
-              input#motherPhone.form-control(type='tel' name='motherPhone')
-              #motherPhoneError.error-message
-            .form-group
-              label(for='motherEmail') Mother&apos;s Email
-              input#motherEmail.form-control(type='email' name='motherEmail')
-              #motherEmailError.error-message
-            .form-group
-              label(for='motherNationality') Mother&apos;s Nationality
-              input#motherNationality.form-control(type='text' name='motherNationality')
-              #motherNationalityError.error-message
-            .form-group
-              label(for='motherOccupation') Mother&apos;s Occupation
-              input#motherOccupation.form-control(type='text' name='motherOccupation')
-              #motherOccupationError.error-message
-            // Parental Responsibility
-            .form-group
-              label Who has parental responsibility?
-              .form-check
-                input#father.form-check-input(type='radio' name='parentResponsibility' value='father' checked='')
-                label.form-check-label(for='father') Father
-              .form-check
-                input#mother.form-check-input(type='radio' name='parentResponsibility' value='mother')
-                label.form-check-label(for='mother') Mother
-              .form-check
-                input#both.form-check-input(type='radio' name='parentResponsibility' value='both')
-                label.form-check-label(for='both') Both
-              .form-check
-                input#other.form-check-input(type='radio' name='parentResponsibility' value='other')
-                label.form-check-label(for='other') Other
-              #parentResponsibilityError.error-message
-            // Other Information
-            h5 Other Information
-            .form-group
-              label(for='location') Location
-              input#location.form-control(type='text' name='location')
-              #locationError.error-message
-            .form-group
-              label(for='nationality') Nationality
-              input#nationality.form-control(type='text' name='nationality')
-              #nationalityError.error-message
-            .form-group
-              label(for='religion') Religion
-              input#religion.form-control(type='text' name='religion')
-              #religionError.error-message
-            // Medical Details
-            h5 Medical Details
-            .form-group
-              label(for='medicalBackground') Medical Background
-              textarea#medicalBackground.form-control(name='medicalBackground' rows='3')
-              #medicalBackgroundError.error-message
-            .form-group
-              label(for='doctor') Doctor&apos;s Name
-              input#doctor.form-control(type='text' name='doctor')
-              #doctorError.error-message
-            .form-group
-              label(for='doctorPhone') Doctor&apos;s Telephone Number
-              input#doctorPhone.form-control(type='tel' name='doctorPhone')
-              #doctorPhoneError.error-message
-            .form-group
-              label(for='doctorEmail') Doctor&apos;s Email
-              input#doctorEmail.form-control(type='email' name='doctorEmail')
-              #doctorEmailError.error-message
-            .form-group
-              label(for='hospital') Hospital
-              input#hospital.form-control(type='text' name='hospital')
-              #hospitalError.error-message
-            .form-group
-              label(for='babyNumber') Baby Number
-              input#babyNumber.form-control(type='text' name='babyNumber')
-              #babyNumberError.error-message
-            .form-group
-              label Is the child an orphan?
-              .form-check
-                input#isOrphanYes.form-check-input(type='radio' name='isOrphan' value='yes')
-                label.form-check-label(for='isOrphanYes') Yes
-              .form-check
-                input#isOrphanNo.form-check-input(type='radio' name='isOrphan' value='no' checked='')
-                label.form-check-label(for='isOrphanNo') No
-            #guardianDetails.form-group(style='display: none' onsubmit='return validation(event)' name='validationForm')
-              h5 Guardian&apos;s Details
-              .form-group
-                label(for='guardianName') Guardian&apos;s Name
-                input#guardianName.form-control(type='text' name='guardianName')
-                #guardianNameError.error-message
-              .form-group
-                label(for='guardianPhone') Guardian&apos;s Telephone Number
-                input#guardianPhone.form-control(type='tel' name='guardianPhone')
-                #guardianPhoneError.error-message
-              .form-group
-                label(for='guardianEmail') Guardian&apos;s Email
-                input#guardianEmail.form-control(type='email' name='guardianEmail')
-                #guardianEmailError.error-message
-              .form-group
-                label(for='relationshipStatus') Relationship Status with the Child
-                input#relationshipStatus.form-control(type='text' name='relationshipStatus')
-                #relationshipStatusError.error-message
-            button.btn.btn-primary(type='submit')
-             | Register
-br
-include footer
-// Bootstrap JS and dependencies (e.g., Chart.js)
-script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
-script(src="/js/babyreg.js")
-
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Babies Registration
+    // Bootstrap CSS
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+    link(rel='stylesheet' href='/css/style.css')
+    style.
+      #babyRegistrationForm {
+        width: 600px;
+        margin: 2vh auto 0 auto;
+        padding: 20px;
+        background-color: rgb(240, 240, 240);
+        border-radius: 4px;
+        font-size: 13.5px;
+        color: black;
+      }
+      .card-header {
+        color: black;
+      }
+  body
+    include nav
+    include buttonBar
+    #form.container.mt-5
+      .row.justify-content-center
+        .col-md-8
+          .card
+            .card-header Babies Registration Form
+            .card-body
+              form#babyRegistrationForm(action="/register" method="POST" onsubmit='return validation(event)' name='validationForm')
+                // Child's Information
+                h5 Child&apos;s Information
+                .form-group
+                  label(for='childName') Child&apos;s Name
+                  input#childName.form-control(type='text' name='childName')
+                  #childNameError.error-message
+                .form-group
+                  label(for='gender') Gender
+                  select#gender.form-control(name='gender')
+                    option(value='') Select Gender
+                    option(value='male') Male
+                    option(value='female') Female
+                  #genderError.error-message
+                .form-group
+                  label(for='dateOfBirth') Date of Birth
+                  input#dateOfBirth.form-control(type='date' name='dateOfBirth')
+                  #dateOfBirthError.error-message
+                // Parental Responsibility
+                .form-group
+                  label Who has parental responsibility?
+                  .form-check
+                    input#father.form-check-input(type='radio' name='parentResponsibility' value='father' checked='')
+                    label.form-check-label(for='father') Father
+                  .form-check
+                    input#mother.form-check-input(type='radio' name='parentResponsibility' value='mother')
+                    label.form-check-label(for='mother') Mother
+                  .form-check
+                    input#both.form-check-input(type='radio' name='parentResponsibility' value='both')
+                    label.form-check-label(for='both') Both
+                  .form-check
+                    input#other.form-check-input(type='radio' name='parentResponsibility' value='other')
+                    label.form-check-label(for='other') Other
+                  #parentResponsibilityError.error-message
+                // Parents' Information
+                h5 Parents&apos; Information
+                .form-group#fatherDetails
+                  label(for='fatherName') Father&apos;s Name
+                  input#fatherName.form-control(type='text' name='fatherName')
+                  #fatherNameError.error-message
+                  label(for='fatherPhone') Father&apos;s Telephone Number
+                  input#fatherPhone.form-control(type='tel' name='fatherPhone')
+                  #fatherPhoneError.error-message
+                  label(for='fatherEmail') Father&apos;s Email
+                  input#fatherEmail.form-control(type='email' name='fatherEmail')
+                  #fatherEmailError.error-message
+                  label(for='fatherNationality') Father&apos;s Nationality
+                  input#fatherNationality.form-control(type='text' name='fatherNationality')
+                  #fatherNationalityError.error-message
+                  label(for='fatherOccupation') Father&apos;s Occupation
+                  input#fatherOccupation.form-control(type='text' name='fatherOccupation')
+                  #fatherOccupationError.error-message
+                .form-group#motherDetails
+                  label(for='motherName') Mother&apos;s Name
+                  input#motherName.form-control(type='text' name='motherName')
+                  #motherNameError.error-message
+                  label(for='motherPhone') Mother&apos;s Telephone Number
+                  input#motherPhone.form-control(type='tel' name='motherPhone')
+                  #motherPhoneError.error-message
+                  label(for='motherEmail') Mother&apos;s Email
+                  input#motherEmail.form-control(type='email' name='motherEmail')
+                  #motherEmailError.error-message
+                  label(for='motherNationality') Mother&apos;s Nationality
+                  input#motherNationality.form-control(type='text' name='motherNationality')
+                  #motherNationalityError.error-message
+                  label(for='motherOccupation') Mother&apos;s Occupation
+                  input#motherOccupation.form-control(type='text' name='motherOccupation')
+                  #motherOccupationError.error-message
+                // Other Information
+                h5 Other Information
+                .form-group
+                  label(for='location') Location
+                  input#location.form-control(type='text' name='location')
+                  #locationError.error-message
+                .form-group
+                  label(for='nationality') Nationality
+                  input#nationality.form-control(type='text' name='nationality')
+                  #nationalityError.error-message
+                .form-group
+                  label(for='religion') Religion
+                  input#religion.form-control(type='text' name='religion')
+                  #religionError.error-message
+                // Medical Details
+                h5 Medical Details
+                .form-group
+                  label(for='medicalBackground') Medical Background
+                  textarea#medicalBackground.form-control(type='text' name='medicalBackground' rows='3')
+                  #medicalBackgroundError.error-message
+                .form-group
+                  label(for='doctor') Doctor&apos;s Name
+                  input#doctor.form-control(type='text' name='doctor')
+                  #doctorError.error-message
+                .form-group
+                  label(for='doctorPhone') Doctor&apos;s Telephone Number
+                  input#doctorPhone.form-control(type='text' name='doctorPhone')
+                  #doctorPhoneError.error-message
+                .form-group
+                  label(for='doctorEmail') Doctor&apos;s Email
+                  input#doctorEmail.form-control(type='email' name='doctorEmail')
+                  #doctorEmailError.error-message
+                .form-group
+                  label(for='hospital') Hospital
+                  input#hospital.form-control(type='text' name='hospital')
+                  #hospitalError.error-message
+                .form-group
+                  label(for='babyNumber') Baby Number
+                  input#babyNumber.form-control(type='text' name='babyNumber')
+                  #babyNumberError.error-message
+                .form-group
+                  label Is the child an orphan?
+                  .form-check
+                    input#isOrphanYes.form-check-input(type='radio' name='isOrphan' value='yes')
+                    label.form-check-label(for='isOrphanYes') Yes
+                  .form-check
+                    input#isOrphanNo.form-check-input(type='radio' name='isOrphan' value='no' checked='')
+                    label.form-check-label(for='isOrphanNo') No
+                .form-group#guardianDetails(style='display: none')
+                  h5 Guardian&apos;s Details
+                  .form-group
+                    label(for='guardianName') Guardian&apos;s Name
+                    input#guardianName.form-control(type='text' name='guardianName')
+                    #guardianNameError.error-message
+                  .form-group
+                    label(for='guardianPhone') Guardian&apos;s Telephone Number
+                    input#guardianPhone.form-control(type='tel' name='guardianPhone')
+                    #guardianPhoneError.error-message
+                  .form-group
+                    label(for='guardianEmail') Guardian&apos;s Email
+                    input#guardianEmail.form-control(type='email' name='guardianEmail')
+                    #guardianEmailError.error-message
+                  .form-group
+                    label(for='relationshipStatus') Relationship Status with the Child
+                    input#relationshipStatus.form-control(type='text' name='relationshipStatus')
+                    #relationshipStatusError.error-message
+                button.btn.btn-primary(type='submit') Register
+    br
+    include footer
+    // Bootstrap JS and dependencies (e.g., Chart.js)
+    script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
+    script(src="/js/babyreg.js")

@@ -9,39 +9,69 @@ head
   link(rel='stylesheet' href='/css/style.css')
   style.
     .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: left;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
     }
-    .form-container {
-    margin-top: 20px;
-    }
-    .table-container {
-    margin-top: 40px;
-    }
-    button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     table th,
     table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    width:auto;
-    text-align: center;
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
     }
     table th {
-    background-color: #f2f2f2;
+      background-color: #f8f9fa;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
     }
-    table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #f2f2f2;
+    .table-hover tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 4px;
+      border-radius: 25px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    @media (max-width: 768px) {
+      table, table thead, table tbody, table th, table td, table tr {
+        display: block;
+      }
+      table thead tr {
+        display: none;
+      }
+      table tr {
+        margin-bottom: 1rem;
+      }
+      table td {
+        text-align: center;
+        padding-left: 50%;
+        position: relative;
+      }
+      table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+      }
     }
 include nav
 include buttonBar
@@ -50,15 +80,14 @@ br
   table.table.table-striped
     thead
       tr
-        th Baby Number
+        th ID
         th Name
-        th Date of Birth
+        th DOB
         th Gender
         th Parent/Guardian
         th Contact
         th Email Address
         th Location
-        th Status
         th Action
     tbody#babyTableBody
       if babies.length 
@@ -73,13 +102,13 @@ br
               td #{baby.fatherPhone}
               td #{baby.fatherEmail}
               td #{baby.location}
-              td #{baby.status}
               td 
-                a.btn.btn-success(href="/babyUpdate/"+baby._id) Update
-              td  
+                a.btn(href="/babyUpdate/"+baby._id)
+                  i.fas.fa-edit  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-danger(type="submit") Delete
+                  button.btn(type="submit")
+                    i.fas.fa-trash-alt
           else if baby.parentResponsibility === 'mother'
             tr 
               td #{baby.babyNumber}
@@ -91,11 +120,12 @@ br
               td #{baby.motherEmail}
               td #{baby.location}
               td 
-                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update
-              td  
+                a.btn(href="/babyUpdate/"+ baby._id)
+                  i.fas.fa-edit  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-danger(type="submit") Delete
+                  button.btn(type="submit")
+                    i.fas.fa-trash-alt
           else if  baby.parentResponsibility === 'both'
             tr 
               td #{baby.babyNumber}
@@ -107,11 +137,12 @@ br
               td #{baby.motherEmail+' and '+ baby.fatherEmail}
               td #{baby.location}
               td 
-                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update
-              td  
+                a.btn(href="/babyUpdate/"+ baby._id)
+                  i.fas.fa-edit 
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-danger(type="submit") Delete
+                  button.btn(type="submit")
+                    i.fas.fa-trash-alt
           else if  baby.parentResponsibility === 'other'
             tr 
               td #{baby.babyNumber}
@@ -123,11 +154,12 @@ br
               td #{baby.guardianEmail}
               td #{baby.location}
               td 
-                a.btn.btn-success(href="/babyUpdate/"+ baby._id) Update 
-              td  
+                a.btn(href="/babyUpdate/"+ baby._id)
+                  i.fas.fa-edit  
                 form(method="POST" action="/delete")
                   input(type="hidden" name="id" value=baby._id)
-                  button.btn.btn-danger(type="submit") Delete
+                  button.btn(type="submit")
+                    i.fas.fa-trash-alt
 br
 include footer      
 // Bootstrap JS and dependencies (e.g., Chart.js)

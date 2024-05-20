@@ -309,4 +309,51 @@ router.post("/checkoutupdate/:id", async (req, res) => {
   }
 });
 
+// Route to display the record history of babies checked in
+router.get("/checkinHistory", async (req, res, next) => {
+  try {
+    // Fetch the check-in records from the database, including the sitter information
+    const checkinHistory = await BabyCheckInOut.find({ eventType: "checkin" })
+      .populate({ path: 'sitter', select: 'fullName' })  // Populate sitter's fullName
+      .select('checkinTime babyName sitter personBrought contactBrought periodOfStay');  // Select relevant fields
+
+    // Render the checkinHistory.pug template with the fetched records
+    res.render("checkinhis", { checkinHistory });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Route to calculate payments for sitters and display them
+router.get("/sitterPayments", async (req, res, next) => {
+  try {
+    // Retrieve the list of sitters
+    const sitters = await StaffRegistration.find({ role: "Sitter" }).select('_id fullName');
+    const sitterPayments = [];
+    const ratePerBaby = 3000; // 3000 UGX per baby
+
+    for (const sitter of sitters) {
+      // Calculate the number of babies assigned to the sitter for the current day
+      const currentDate = new Date().toISOString().slice(0, 10); // Get current date in YYYY-MM-DD format
+      const assignedBabiesCount = await BabyCheckInOut.countDocuments({ sitter: sitter._id, checkinTime: { $gte: new Date(currentDate), $lt: new Date(currentDate + "T23:59:59.999Z") } });
+
+      // Calculate payment based on the number of babies assigned
+      const payment = assignedBabiesCount * ratePerBaby;
+
+      sitterPayments.push({ sitterId: sitter._id, sitter: sitter.fullName, assignedBabiesCount, payment });
+    }
+
+    console.log("Sitter Payments calculated:", sitterPayments);
+
+    // Store sitterPayments in the session
+    req.session.sitterPayments = sitterPayments;
+
+    res.render("sitterPayments", { sitterPayments }); // Pass sitterPayments to the template
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 module.exports = router;

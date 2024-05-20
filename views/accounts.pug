@@ -16,41 +16,40 @@ head
     }
 include nav 
 include buttonBar
-a.btn.btn-primary(href='/accrecords') Accounts Record's History
-.container.mt-5
-  // Record Form
-  .row.justify-content-center
-    .col-md-6.form-container
-      h4.text-center.mb-4 Add New Record
-      form#accountsform(action='/accounts' method='POST' onsubmit='return validation(event)' name='validationForm')
-        .form-group
-          label Select Record Type:
-          br
-          .form-check.form-check-inline
-            input#expenseRadio.form-check-input(type='radio' name='recordType' value='Expense' checked='')
-            label.form-check-label(for='expenseRadio') Expense (Money Spent)
-            #expenseRadioError.error-message
-          .form-check.form-check-inline
-            input#incomeRadio.form-check-input(type='radio' name='recordType' value='Income')
-            label.form-check-label(for='incomeRadio') Income (Money Paid to Daycare)
-            #expenseRadioError.error-message
-        .form-group
-          label(for='recordRefNo') Reference Number:
-          input#recordRefNo.form-control(type='text' name='recordRefNo')
-          #recordRefNoError.error-message
-        .form-group
-          label(for='recordDate') Date:
-          input#recordDate.form-control(type='date' name='recordDate')
-          #recordDateError.error-message
-        .form-group
-          label(for='recordDescription') Description:
-          input#recordDescription.form-control(type='text' name='recordDescription')
-          #recordDescriptionError.error-message
-        .form-group
-          label(for='recordAmount') Amount (UGX):
-          input#recordAmount.form-control(type='number' name='recordAmount' min='0' step='0.01' placeholder='Enter amount in UGX')
-          #recordAmountError.error-message
-        button.btn.btn-primary.btn-block(type='submit') Add Record
+a.btn.btn-secondary(href='/accrecords') Accounts Record's History
+.row.justify-content-center
+  .col-md-6.form-container
+    h4.text-center.mb-4 Add New Record
+    form#accountsform(action='/accounts' method='POST' onsubmit='return validation(event)' name='validationForm')
+      .form-group
+        label Select Record Type:
+        br
+        .form-check.form-check-inline
+          input#expenseRadio.form-check-input(type='radio' name='recordType' value='Expense' checked='')
+          label.form-check-label(for='expenseRadio') Expense (Money Spent)
+          #expenseRadioError.error-message
+        .form-check.form-check-inline
+          input#incomeRadio.form-check-input(type='radio' name='recordType' value='Income')
+          label.form-check-label(for='incomeRadio') Income (Money Paid to Daycare)
+          #expenseRadioError.error-message
+      .form-group
+        label(for='recordRefNo') Reference Number:
+        input#recordRefNo.form-control(type='text' name='recordRefNo')
+        #recordRefNoError.error-message
+      .form-group
+        label(for='recordDate') Date:
+        input#recordDate.form-control(type='date' name='recordDate')
+        #recordDateError.error-message
+      .form-group
+        label(for='recordDescription') Description:
+        input#recordDescription.form-control(type='text' name='recordDescription')
+        #recordDescriptionError.error-message
+      .form-group
+        label(for='recordAmount') Amount (UGX):
+        input#recordAmount.form-control(type='number' name='recordAmount' min='0' step='0.01' placeholder='Enter amount in UGX')
+        #recordAmountError.error-message
+      button.btn.btn-primary.btn-block(type='submit') Add Record
+
 br        
 include footer      
 // Bootstrap JS and dependencies (e.g., Chart.js)

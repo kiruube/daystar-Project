@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
-// Define the schema for the BabyCheckInOut model
 const babyCheckInOutSchema = new mongoose.Schema({
   babyName: {
     type: String,
-    trim: true
+    unique: true
   },
   personBrought: {
     type: String,
@@ -16,7 +15,7 @@ const babyCheckInOutSchema = new mongoose.Schema({
   },
   periodOfStay: {
     type: String,
-    enum: ["Full Day(UGX 15,000)", "Half Day(UGX 10,000)"] // Specifies the periodOfStay
+    enum: ["Full Day(UGX 15,000)", "Half Day(UGX 10,000)"]
   },
   sitter: {
     type: mongoose.Schema.Types.ObjectId,
@@ -48,10 +47,7 @@ const babyCheckInOutSchema = new mongoose.Schema({
   }
 });
 
-// Create the BabyCheckInOut model using the schema
-const BabyCheckInOut = mongoose.model("BabyCheckInOut", babyCheckInOutSchema, "babycheckinouts");
-
-module.exports = BabyCheckInOut;
+module.exports = mongoose.model("BabyCheckInOut", babyCheckInOutSchema);
 
 
 

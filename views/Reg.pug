@@ -9,16 +9,16 @@ head
   link(rel='stylesheet' href='/css/style.css')
   style.
     #sitterRegistrationForm {
-    width: 600px;
-    margin: 1vh auto 0 auto;
-    padding: 20px;
-    background-color: rgb(240, 240, 240);
-    border-radius: 4px;
-    font-size: 13.5px;
-    color: black;
+      max-width: 600px;
+      margin: 0 auto; /* This will center the form horizontally */
+      padding: 20px;
+      background-color: rgb(240, 240, 240);
+      border-radius: 4px;
+      font-size: 13.5px;
+      color: black;
     }
     .card-header {
-    color: black;
+      color: black;
     }
 include nav
 include buttonBar
@@ -55,7 +55,7 @@ include buttonBar
               #phoneError.error-message
             .form-group
               label(for='email') Email
-              input#email.form-control(type='email' name='email')
+              input#email.form-control(type='text' name='email')
               #emailError.error-message
             .form-group
               label(for='nationality') Nationality

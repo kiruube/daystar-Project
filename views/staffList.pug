@@ -7,41 +7,92 @@ head
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
   link(rel='stylesheet' href='/css/style.css')
   style.
-    table th,
-    table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    width:auto;
-    text-align: center;
-    }
-    table th {
-    background-color: #f2f2f2;
+    .container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
     }
     table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #f2f2f2;
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    table th,
+    table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    table th {
+      background-color: #f8f9fa;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 0 4px;
+      border-radius: 25px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    @media (max-width: 768px) {
+      table, table thead, table tbody, table th, table td, table tr {
+        display: block;
+      }
+      table thead tr {
+        display: none;
+      }
+      table tr {
+        margin-bottom: 1rem;
+      }
+      table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+      table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+      }
     }
 include nav 
 include buttonBar   
 br
 .container
-  table.table.table-striped
-    thead
-      tr
-        th Staff Number
-        th Name
-        th Role
-        th Gender
-        th Contact
-        th NIN
-        th Email Address
-        th Level of Education
-        th Next Of Kin
-        th Action
-    tbody#staffTableBody
-      if staffmembers.length 
-        each staff in staffmembers 
+  .table-container
+    table.table.table-striped
+      thead
+        tr
+          th ID
+          th Name
+          th Role
+          th Gender
+          th Contact
+          th NIN
+          th Email Address
+          th Qualification
+          th NOK
+          th Action
+      tbody#staffTableBody
+        if staffmembers.length 
+          each staff in staffmembers 
             tr 
               td #{staff.staffNumber}
               td #{staff.fullName}
@@ -53,11 +104,12 @@ br
               td #{staff.education}
               td #{staff.nok}
               td 
-                a.btn.btn-success(href="/RegUpdate/"+staff._id) Update 
-              td  
+                a.btn(href="/RegUpdate/"+staff._id)
+                  i.fas.fa-edit 
                 form(method="POST" action="/staffdelete")
                   input(type="hidden" name="id" value=staff._id)
-                  button.btn.btn-danger(type="submit") Delete
+                  button.btn(type="submit") 
+                    i.fas.fa-trash-alt
 include footer                  
 // Bootstrap JS and dependencies (e.g., Chart.js)
-script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')                  
+script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

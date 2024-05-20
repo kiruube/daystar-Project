@@ -4,6 +4,7 @@ const babyregistrationSchema = new mongoose.Schema({
   childName: {
     type: String,
     trim: true,
+    unqiue: true
   },
   gender: {
     type: String,
@@ -81,6 +82,10 @@ const babyregistrationSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  doctorPhone: {
+    type: String,
+    trim: true,
+  },
   hospital: {
     type: String,
     trim: true,
@@ -108,10 +113,7 @@ const babyregistrationSchema = new mongoose.Schema({
   relationshipStatus: {
     type: String,
     trim: true,
-  },
-  status:{
-    type: String,
-    trim: true
   }
+
 });
 module.exports = mongoose.model("RegisterBaby", babyregistrationSchema );

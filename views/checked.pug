@@ -5,6 +5,7 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Checked-in Babies
     link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", rel="stylesheet")
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
     style.
      table th,
      table td {
@@ -25,7 +26,7 @@ html(lang="en")
     include nav 
     include attend
     .container.mt-4
-      h2 Checked-in Babies
+      h4.text-center.mb-4 Checked-in Babies
       table.table
         thead
           tr
@@ -44,15 +45,16 @@ html(lang="en")
               td #{baby.contactBrought}
               td #{baby.periodOfStay}
               td #{baby.sitter ? baby.sitter.fullName : ''}
-              td #{baby.checkinTime}
+              td= moment(baby.checkinTime).format('MMMM Do YYYY, h:mm a')
               td
-                a.btn.btn-primary.btn-sm(type="button", href=`/checkinupdate/${baby._id}`) Update
-              td
+                a.btn.btn-secondary.btn-sm(type="button", href=`/checkout/${baby._id}`) Checkout 
+              td 
+                a.btn(type="button", href=`/checkinupdate/${baby._id}`)
+                  i.fas.fa-edit 
                 form(action=`/checkedin/${baby._id}`, method="POST")
                    input(type="hidden", name="_method", value="DELETE")
-                   button.btn.btn-danger.btn-sm(type="submit") Delete  
-              td  
-                a.btn.btn-success.btn-sm(type="button", href=`/checkout/${baby._id}`) Checkout
-
-    include footer               
+                   button.btn(type="submit")
+                    i.fas.fa-trash-alt  
+    include footer  
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js')             
   script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')

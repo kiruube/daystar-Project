@@ -1,286 +1,89 @@
-const validation = (event) => {
-    function validateForm() {
-        let error = 0;
+router.get('/search', async (req, res) => {
+   try {
+     const query = req.query.query;
+     
+     if (!query) {
+       return res.render('search', { query: '', results: [], error: 'Please provide a search query' });
+     }
+ 
+     // Define an array of model names you want to search through
+     const modelsToSearch = [Sitters, Dolls, Register, Application, Procurement]; // Update this array with your model names
+ 
+     // Perform asynchronous search queries across all models
+     async.map(mod
+You
+10:20 PM
+oh
+Janet Abalo
+10:21 PM
+form#searchForm(action='/sitterslist', method='GET')
+        input#searchInput(type='text', placeholder='Search...', name='q', value= q)
+        button#searchButton(type='submit') Search
 
-        // Reset error messages
-        const errorMessages = document.querySelectorAll(".error-message");
-        errorMessages.forEach(function (errorMessage) {
-            errorMessage.textContent = "";
-        });
 
-        // Child's Information
-        const childName = document.getElementById('childName');
-        const childNameError = document.getElementById('childNameError');
-        if (childName.value.trim() === '') {
-            setError(childName, childNameError, 'Child\'s Name is required!');
-            error++;
-        } else {
-            setSuccess(childName, childNameError);
-        }
 
-         // Father's Name validation
-  const fatherName = document.getElementById('fatherName');
-  const fatherNameError = document.getElementById('fatherNameError');
-  if (fatherName.value.trim() === '') {
-      fatherName.style.border = '1px solid red';
-      fatherNameError.textContent = 'Father\'s Name is required!';
-      fatherNameError.style.color = 'red';
-      error++;
-  } else {
-      fatherName.style.border = '1px solid green';
-      fatherNameError.textContent = '';
-  }
+ 
+router.get('/search', async (req, res) => {
+   try {
+     const query = req.query.query;
+     
+     if (!query) {
+       return res.render('search', { query: '', results: [], error: 'Please provide a search query' });
+     }
+ 
+     // Define an array of model names you want to search through
+     const modelsToSearch = [Sitters, Dolls, Register, Application, Procurement]; // Update this array with your model names
+ 
+     // Perform asynchronous search queries across all models
+     async.map(modelsToSearch, (model, callback) => {
+       model.find({ $text: { $search: query } }, (err, results) => {
+         if (err) {
+           return callback(err);
+         }
+         callback(null, results);
+       });
+     }, (err, searchResults) => {
+       if (err) {
+         console.error('Error searching for items:', err);
+         return res.status(500).send('Internal server error');
+       }
+ // Flatten the array of search results
+       const flattenedResults = searchResults.flat();
+ 
+       // Render the search results using a Pug template
+       res.render('search-results', { query, results: flattenedResults });
+     });
+   } catch (error) {
+     console.error('Error searching for items:', error);
+     res.status(500).send('Internal server error');
+   }
+ });
 
-  // Father's Telephone Number validation
-  const fatherPhone = document.getElementById('fatherPhone');
-  const fatherPhoneError = document.getElementById('fatherPhoneError');
-  const phoneRegex = /^\d{10}$/; // Regex for ten digits
 
-  if (!phoneRegex.test(fatherPhone.value.trim())) {
-      fatherPhone.style.border = '1px solid red';
-      fatherPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
-      fatherPhoneError.style.color = 'red';
-      error++;
-  } else {
-      fatherPhone.style.border = '1px solid green';
-      fatherPhoneError.textContent = '';
-  }
 
-  // Father's Email validation
-  const fatherEmail = document.getElementById('fatherEmail');
-  const fatherEmailError = document.getElementById('fatherEmailError');
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex for email format
 
-  if (!emailRegex.test(fatherEmail.value.trim())) {
-      fatherEmail.style.border = '1px solid red';
-      fatherEmailError.textContent = 'Please enter a valid email address!';
-      fatherEmailError.style.color = 'red';
-      error++;
-  } else {
-      fatherEmail.style.border = '1px solid green';
-      fatherEmailError.textContent = '';
-  }
 
-  // Father's Nationality validation
-  const fatherNationality = document.getElementById('fatherNationality');
-  const fatherNationalityError = document.getElementById('fatherNationalityError');
-  if (fatherNationality.value.trim() === '') {
-      fatherNationality.style.border = '1px solid red';
-      fatherNationalityError.textContent = 'Father\'s Nationality is required!';
-      fatherNationalityError.style.color = 'red';
-      error++;
-  } else {
-      fatherNationality.style.border = '1px solid green';
-      fatherNationalityError.textContent = '';
-  }
 
-  // Mother's Name validation
-  const motherName = document.getElementById('motherName');
-  const motherNameError = document.getElementById('motherNameError');
-  if (motherName.value.trim() === '') {
-      motherName.style.border = '1px solid red';
-      motherNameError.textContent = 'Mother\'s Name is required!';
-      motherNameError.style.color = 'red';
-      error++;
-  } else {
-      motherName.style.border = '1px solid green';
-      motherNameError.textContent = '';
-  }
 
-  // Mother's Telephone Number validation
-  const motherPhone = document.getElementById('motherPhone');
-  const motherPhoneError = document.getElementById('motherPhoneError');
-  if (!phoneRegex.test(motherPhone.value.trim())) {
-      motherPhone.style.border = '1px solid red';
-      motherPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
-      motherPhoneError.style.color = 'red';
-      error++;
-  } else {
-      motherPhone.style.border = '1px solid green';
-      motherPhoneError.textContent = '';
-  }
 
-  // Mother's Email validation
-  const motherEmail = document.getElementById('motherEmail');
-  const motherEmailError = document.getElementById('motherEmailError');
-  if (!emailRegex.test(motherEmail.value.trim())) {
-      motherEmail.style.border = '1px solid red';
-      motherEmailError.textContent = 'Please enter a valid email address!';
-      motherEmailError.style.color = 'red';
-      error++;
-  } else {
-      motherEmail.style.border = '1px solid green';
-      motherEmailError.textContent = '';
-  }
 
-  // Mother's Nationality validation
-  const motherNationality = document.getElementById('motherNationality');
-  const motherNationalityError = document.getElementById('motherNationalityError');
-  if (motherNationality.value.trim() === '') {
-      motherNationality.style.border = '1px solid red';
-      motherNationalityError.textContent = 'Mother\'s Nationality is required!';
-      motherNationalityError.style.color = 'red';
-      error++;
-  } else {
-      motherNationality.style.border = '1px solid green';
-      motherNationalityError.textContent = '';
-  }
 
-  // Father's Occupation validation
-  const fatherOccupation = document.getElementById('fatherOccupation');
-  const fatherOccupationError = document.getElementById('fatherOccupationError');
-  if (fatherOccupation.value.trim() === '') {
-      fatherOccupation.style.border = '1px solid red';
-      fatherOccupationError.textContent = 'Father\'s Occupation is required!';
-      fatherOccupationError.style.color = 'red';
-      error++;
-  } else {
-      fatherOccupation.style.border = '1px solid green';
-      fatherOccupationError.textContent = '';
-  }
-
-// Medical Background validation
-const medicalBackground = document.getElementById('medicalBackground');
-const medicalBackgroundError = document.getElementById('medicalBackgroundError');
-if (medicalBackground.value.trim() === '') {
-    medicalBackground.style.border = '1px solid red';
-    medicalBackgroundError.textContent = 'Medical Background is required!';
-    medicalBackgroundError.style.color = 'red';
-    error++;
-} else {
-    medicalBackground.style.border = '1px solid green';
-    medicalBackgroundError.textContent = '';
-}
-
-// Doctor's Name validation
-const doctor = document.getElementById('doctor');
-const doctorError = document.getElementById('doctorError');
-if (doctor.value.trim() === '') {
-    doctor.style.border = '1px solid red';
-    doctorError.textContent = 'Doctor\'s Name is required!';
-    doctorError.style.color = 'red';
-    error++;
-} else {
-    doctor.style.border = '1px solid green';
-    doctorError.textContent = '';
-}
-
-// Doctor's Telephone Number validation
-const doctorPhone = document.getElementById('doctorPhone');
-const doctorPhoneError = document.getElementById('doctorPhoneError');
-if (!phoneRegex.test(doctorPhone.value.trim())) {
-    doctorPhone.style.border = '1px solid red';
-    doctorPhoneError.textContent = 'Please enter a valid ten-digit phone number!';
-    doctorPhoneError.style.color = 'red';
-    error++;
-} else {
-    doctorPhone.style.border = '1px solid green';
-    doctorPhoneError.textContent = '';
-}
-
-// Doctor's Email validation
-const doctorEmail = document.getElementById('doctorEmail');
-const doctorEmailError = document.getElementById('doctorEmailError');
-if (!emailRegex.test(doctorEmail.value.trim())) {
-    doctorEmail.style.border = '1px solid red';
-    doctorEmailError.textContent = 'Please enter a valid email address!';
-    doctorEmailError.style.color = 'red';
-    error++;
-} else {
-    doctorEmail.style.border = '1px solid green';
-    doctorEmailError.textContent = '';
-}
-
-// Hospital validation
-const hospital = document.getElementById('hospital');
-const hospitalError = document.getElementById('hospitalError');
-if (hospital.value.trim() === '') {
-    hospital.style.border = '1px solid red';
-    hospitalError.textContent = 'Hospital is required!';
-    hospitalError.style.color = 'red';
-    error++;
-} else {
-    hospital.style.border = '1px solid green';
-    hospitalError.textContent = '';
-}
-
-// Baby Number validation
-const babyNumber = document.getElementById('babyNumber');
-const babyNumberError = document.getElementById('babyNumberError');
-if (babyNumber.value.trim() === '') {
-    babyNumber.style.border = '1px solid red';
-    babyNumberError.textContent = 'Baby Number is required!';
-    babyNumberError.style.color = 'red';
-    error++;
-} else {
-    babyNumber.style.border = '1px solid green';
-    babyNumberError.textContent = '';
-}
-
-        // Orphan validation
-        const isOrphanYes = document.getElementById('isOrphanYes');
-        const isOrphanNo = document.getElementById('isOrphanNo');
-        const orphanError = document.getElementById('orphanError');
-        const guardianDetails = document.getElementById('guardianDetails');
-
-        if (!isOrphanYes.checked && !isOrphanNo.checked) {
-            orphanError.textContent = 'Please select if the child is an orphan!';
-            orphanError.style.color = 'red';
-            error++;
-        } else {
-            orphanError.textContent = '';
-            if (isOrphanYes.checked) {
-                // If the child is marked as an orphan, guardian details are required
-                const guardianName = document.getElementById('guardianName');
-                const guardianPhone = document.getElementById('guardianPhone');
-                const guardianEmail = document.getElementById('guardianEmail');
-                const relationshipStatus = document.getElementById('relationshipStatus');
-
-                if (guardianName.value.trim() === '') {
-                    setError(guardianName, guardianNameError, 'Guardian\'s Name is required!');
-                    error++;
-                } else {
-                    setSuccess(guardianName, guardianNameError);
-                }
-
-                if (!phoneRegex.test(guardianPhone.value.trim())) {
-                    setError(guardianPhone, guardianPhoneError, 'Please enter a valid ten-digit phone number!');
-                    error++;
-                } else {
-                    setSuccess(guardianPhone, guardianPhoneError);
-                }
-
-                if (!emailRegex.test(guardianEmail.value.trim())) {
-                    setError(guardianEmail, guardianEmailError, 'Please enter a valid email address!');
-                    error++;
-                } else {
-                    setSuccess(guardianEmail, guardianEmailError);
-                }
-
-                if (relationshipStatus.value.trim() === '') {
-                    setError(relationshipStatus, relationshipStatusError, 'Relationship Status is required!');
-                    error++;
-                } else {
-                    setSuccess(relationshipStatus, relationshipStatusError);
-                }
-            }
-        }
-
-        return error === 0;
+ // Fetching sitters from the database
+router.get("/sitterslist", async (req, res) => {
+  try {
+    const filters = {};
+    const q = req.query.q;
+    if (q) {
+      // Filter by sitter name (first or last name) - like
+      filters.$or = [
+        { firstName: { $regex: q, $options: 'i' } },
+        { lastName: { $regex: q, $options: 'i' } }
+      ];
     }
-
-    function setError(input, errorElement, errorMessage) {
-        input.style.border = '1px solid red';
-        errorElement.textContent = errorMessage;
-        errorElement.style.color = 'red';
-    }
-
-    function setSuccess(input, errorElement) {
-        input.style.border = '1px solid green';
-        errorElement.textContent = '';
-    }
-
-    if (!validateForm()) {
-        event.preventDefault();
-    }
-};
+    const sitters = await Sitters.find(filters);
+    res.render("sittersmanagement", { sitters: sitters, q });
+  } catch (error) {
+    res.status(400).send("Unable to fetch sitters from the database.");
+    console.error("Error fetching sitters:", error);
+  }
+});

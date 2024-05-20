@@ -99,9 +99,10 @@ const validation = (event) => {
   // National ID Number (NIN) validation
   const nin = document.getElementById('nin');
   const ninError = document.getElementById('ninError');
-  if (nin.value.trim() === '') {
+  const ninRegex = /^(CM|CF)\d{8}[A-Z]{4}$/;
+  if (!ninRegex.test(nin.value.trim())) {
       nin.style.border = '1px solid red';
-      ninError.textContent = 'National ID Number (NIN) is required!';
+      ninError.textContent = 'Please enter a valid National ID Number (NIN)!';
       ninError.style.color = 'red';
       error++;
   } else {

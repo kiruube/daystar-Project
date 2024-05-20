@@ -67,7 +67,7 @@ const staffRegistrationSchema = new mongoose.Schema({
     },
     staffNumber:{
         type: String,
-        trim: true
+        unique: true
     }
 
 });

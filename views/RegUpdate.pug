@@ -2,7 +2,7 @@ doctype html
 head
   meta(charset='UTF-8')
   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Stuff Update
+  title Update Stuff's info
   link(href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet')
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
   link(rel='stylesheet' href='/css/style.css')
@@ -78,10 +78,6 @@ br
               label(for='recommendersName') Recommender&apos;s Name
               input#recommendersName.form-control(type='text' name='recommendersName' value= staff.recommendersName)
               #recommendersNameError.error-message
-            .form-group.form-check
-              input#kabalagaResident.form-check-input(type='checkbox' name='kabalagaResident' value= 'yes' checked= staff.kabalagaResident==='yes')
-              label.form-check-label(for='kabalagaResident') Is a resident of Kabalaga.
-              #kabalagaResidentError.error-message
             .form-group
               label(for='role') Role 
               input#role.form-control(type='text' name='role' value= staff.role)

@@ -1,62 +1,112 @@
 doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title Purchase List
-  link(rel='stylesheet' href='/css/style.css')
-  link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet')
-  style.
-    table th,
-    table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    width:auto;
-    text-align: center;
-    }
-    table th {
-    background-color: #f2f2f2;
-    }
-    table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #f2f2f2;
-    }
-include nav
-include buttonBar
-.container
-  table.table
-    thead
-      tr
-        th Image
-        th Item Name
-        th Date of Delievery
-        th Unit
-        th Quantity
-        th Description
-        th Supplier
-        th Price (UGX)
-        th Total Amount
-        th Action
-    tbody#purchaseTableBody
-      if purchases.length 
-        each purchase in purchases 
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Purchase List
+    link(rel='stylesheet' href='/css/style.css')
+    link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css' rel='stylesheet')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css')
+    style.
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1rem;
+      }
+      table th,
+      table td {
+        border: 1px solid #ddd;
+        padding: 12px; 
+        text-align: center;
+        vertical-align: middle;
+      }
+      table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        color: #333; 
+        text-transform: uppercase; 
+      }
+      .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+      }
+      .btn {
+        display: inline-block;
+        padding: 10px 20px; 
+        margin: 0 4px; 
+        border-radius: 25px; 
+        color: #fff;
+        text-decoration: none; 
+        font-size: 14px; 
+        transition: background-color 0.3s ease, box-shadow 0.3s ease; 
+        border: none; 
+        cursor: pointer; 
+        font-weight: bold; 
+      }
+      @media (max-width: 768px) {
+        table, table thead, table tbody, table th, table td, table tr {
+          display: block;
+        }
+        table thead tr {
+          display: none;
+        }
+        table tr {
+          margin-bottom: 1rem;
+        }
+        table td {
+          text-align: right;
+          padding-left: 50%;
+          position: relative;
+        }
+        table td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0;
+          width: 50%;
+          padding-left: 10px;
+          font-weight: bold;
+          text-align: left;
+        }
+        }
+  body
+    include nav
+    include buttonBar
+    .container.mt-4
+      table.table.table-hover.table-striped.table-bordered
+        thead
           tr
-            td
-               img(src=purchase.itemImage, alt='Item Image', style='max-width: 100px; height: 80px;')
-            td #{purchase.itemName}
-            td #{purchase.dateOfDelivery}
-            td #{purchase.itemUnit}
-            td #{purchase.itemQuantity}
-            td #{purchase.itemDescription}
-            td #{purchase.supplier}
-            td #{purchase.rate}
-            td #{purchase.total}
-            td
-              a.btn.btn-success(href=`/purchase/update/${purchase._id}`) Update
-            td   
-              form(method="POST" action="/purchasedelete")
-                input(type="hidden" name="id" value=purchase._id)
-                button.btn.btn-danger(type="submit") Delete
-
+            th Image
+            th Item Name
+            th Date of Delivery 
+            th Unit
+            th QTY
+            th Description
+            th Supplier
+            th Price (UGX)
+            th Total Amount
+            th Action
+        tbody#purchaseTableBody
+          if purchases.length 
+            each purchase in purchases 
+              tr
+                td
+                  img(src=purchase.itemImage, alt='Item Image', style='max-width: 100px; height: 80px;')
+                td #{purchase.itemName}
+                td #{purchase.dateOfDelivery}
+                td #{purchase.itemUnit}
+                td #{purchase.itemQuantity}
+                td #{purchase.itemDescription}
+                td #{purchase.supplier}
+                td #{purchase.rate}
+                td #{purchase.total}
+                td
+                  a.btn(href=`/purchase/update/${purchase._id}`) 
+                    i.fas.fa-edit 
+                  form(method="POST" action="/purchasedelete" style="display:inline;")
+                    input(type="hidden" name="id" value=purchase._id)
+                    button.btn(type="submit") 
+                       i.fas.fa-trash-alt
+br
 include footer
 script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js')
