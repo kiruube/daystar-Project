@@ -312,10 +312,12 @@ router.post("/checkoutupdate/:id", async (req, res) => {
 // Route to display the record history of babies checked in
 router.get("/checkinHistory", async (req, res, next) => {
   try {
-    // Fetch the check-in records from the database, including the sitter information
-    const checkinHistory = await BabyCheckInOut.find({ eventType: "checkin" })
+    // Fetch both check-in and check-out records from the database, including the sitter information
+    const checkinHistory = await BabyCheckInOut.find({
+        eventType: { $in: ["checkin", "checkout"] }  // Include both check-in and check-out events
+      })
       .populate({ path: 'sitter', select: 'fullName' })  // Populate sitter's fullName
-      .select('checkinTime babyName sitter personBrought contactBrought periodOfStay');  // Select relevant fields
+      .select('eventType checkinTime personPickingUp contactNumber checkoutTime babyName sitter personBrought contactBrought periodOfStay');  // Select relevant fields, including both checkinTime and checkoutTime
 
     // Render the checkinHistory.pug template with the fetched records
     res.render("checkinhis", { checkinHistory });
@@ -323,6 +325,7 @@ router.get("/checkinHistory", async (req, res, next) => {
     next(error);
   }
 });
+
 
 // Route to calculate payments for sitters and display them
 router.get("/sitterPayments", async (req, res, next) => {
